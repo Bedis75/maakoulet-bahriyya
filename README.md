@@ -5,8 +5,14 @@ ardoise des arrivages du jour, commandes en livraison et à emporter, back-offic
 propriétaire. Interface entièrement en français ; seule l’enseigne s’affiche en arabe.
 
 - **Next.js 14** (App Router) + TypeScript · **Tailwind CSS 3** · **Prisma** (SQLite en dev,
-  Postgres en prod) · **jose + bcryptjs** pour l’authentification · **zod** pour la validation.
+  Postgres en prod) · **jose + bcryptjs** pour l’authentification · **zod** pour la validation ·
+  **sharp** pour l’optimisation des images.
 - Aucune librairie de composants : tout est écrit à la main.
+
+> **`sharp` n’est pas optionnel ici.** Sans lui, Next optimise les images avec un codec
+> WebAssembly qui fait planter V8 sous Windows / Node 24 (`Check failed:
+> jit_page_->allocations_.erase(addr) == 1` lors du `next start`). Il est en dépendance directe :
+> ne pas le retirer.
 
 ---
 
