@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import Wordmark from '@/components/Wordmark';
+import { getCreditsPhotos } from '@/lib/credits';
 import {
   aAdresse,
   aHoraires,
@@ -112,6 +113,14 @@ export default function SiteFooter() {
                 Mon panier
               </Link>
             </li>
+            {/* Visible uniquement tant que le site utilise des photos empruntées. */}
+            {getCreditsPhotos().length > 0 && (
+              <li>
+                <Link href="/credits-photos" className="hover:text-citron">
+                  Crédits photos
+                </Link>
+              </li>
+            )}
           </ul>
 
           {(estRenseigne(site.social.facebook) || estRenseigne(site.social.instagram)) && (
