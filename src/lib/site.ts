@@ -5,18 +5,109 @@
  *  Tout ce qui identifie le restaurant vient d'ici : en-tête, pied de page,
  *  page contact, métadonnées, JSON-LD, sitemap. Rien n'est écrit en double
  *  ailleurs dans le code.
+ * ---------------------------------------------------------------------------
+ *  ⚠ MODE DÉMONSTRATION ACTIVÉ — voir DONNEES-A-OBTENIR.md
  *
- *  Règle : tant qu'un champ vaut « À CONFIRMER », une chaîne vide ou 0, le site
- *  le masque proprement au visiteur (voir les helpers en bas de fichier).
- *  Un bandeau récapitulant les champs manquants s'affiche en développement
- *  uniquement (composant DevTodoBanner).
+ *  Les coordonnées affichées sur le site sont FICTIVES. Elles servent à montrer
+ *  le site complet lors d'une présentation, en attendant les vraies.
  *
- *  NE JAMAIS inventer une adresse, un numéro ou un horaire : laisser le
- *  marqueur tant que l'information n'est pas confirmée.
+ *  Passer DONNEES_DEMONSTRATION à false rétablit les marqueurs « À CONFIRMER » :
+ *  chaque composant masque alors proprement ce qui n'est pas renseigné, et rien
+ *  d'inventé n'est visible par un visiteur.
  * ---------------------------------------------------------------------------
  */
 
+/** true = coordonnées fictives · false = uniquement les valeurs réelles. */
+export const DONNEES_DEMONSTRATION = true;
+
 export const A_CONFIRMER = 'À CONFIRMER';
+
+type Identite = {
+  legalName: string;
+  description: string;
+  address: { street: string; city: string; postalCode: string; country: string };
+  geo: { lat: number; lng: number };
+  googleMapsUrl: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  hours: { days: string[]; opens: string; closes: string }[];
+  closedDays: string;
+  social: { facebook: string; instagram: string };
+};
+
+/**
+ * VALEURS FICTIVES — aucune ne vient du restaurant.
+ * Le numéro de téléphone se termine par une partie abonné en 000 000, non
+ * attribuable : il ne sonne chez personne. Les coordonnées GPS pointent sur le
+ * port de Sousse, lieu public. Les comptes sociaux n'existent pas.
+ */
+const DEMO: Identite = {
+  legalName: 'Maakoulet Bahriyya SARL',
+  description:
+    'Restaurant de poissons et fruits de mer à Sousse : arrivage quotidien du port, grillades à la minute, livraison et vente à emporter.',
+  address: {
+    street: 'Avenue Hédi Chaker, face au port de pêche',
+    city: 'Sousse',
+    postalCode: '4000',
+    country: 'TN',
+  },
+  geo: { lat: 35.8256, lng: 10.639 },
+  googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=35.8256,10.6390',
+  phone: '+216 73 000 000',
+  whatsapp: '+216 20 000 000',
+  email: 'contact@maakoulet-bahriyya.com',
+  hours: [
+    { days: ['Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'], opens: '11:30', closes: '15:00' },
+    { days: ['Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'], opens: '18:30', closes: '23:00' },
+  ],
+  closedDays: 'Lundi',
+  social: {
+    facebook: 'https://www.facebook.com/maakoulet.bahriyya.sousse',
+    instagram: 'https://www.instagram.com/maakoulet.bahriyya.sousse',
+  },
+};
+
+/**
+ * VALEURS RÉELLES — à remplir au fur et à mesure que le client répond.
+ * C'est ce bloc qui sera utilisé une fois DONNEES_DEMONSTRATION passé à false.
+ */
+const REEL: Identite = {
+  /** TODO raison sociale exacte (mentions légales, facturation). */
+  legalName: A_CONFIRMER,
+  /** TODO une phrase, 150 caractères maximum — sert de meta description. */
+  description: A_CONFIRMER,
+  address: {
+    /** TODO numéro et rue. */
+    street: A_CONFIRMER,
+    /** TODO ville — MOT-CLÉ SEO LE PLUS IMPORTANT DU SITE (voir README §4). */
+    city: A_CONFIRMER,
+    /** TODO code postal. */
+    postalCode: A_CONFIRMER,
+    country: 'TN',
+  },
+  /** TODO coordonnées exactes : clic droit sur le point dans Google Maps. */
+  geo: { lat: 0, lng: 0 },
+  /** TODO lien de la fiche d'établissement Google Maps. */
+  googleMapsUrl: '',
+  /** TODO numéro principal, format international. */
+  phone: '+216 00 000 000',
+  /** TODO numéro WhatsApp (optionnel). */
+  whatsapp: '',
+  /** TODO adresse e-mail professionnelle sur le domaine (optionnel). */
+  email: '',
+  /**
+   * TODO horaires réels — alimente le JSON-LD openingHoursSpecification.
+   * Codes de jours : Mo Tu We Th Fr Sa Su. Une entrée par plage horaire.
+   */
+  hours: [{ days: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'], opens: '00:00', closes: '00:00' }],
+  /** TODO jour(s) de fermeture, en toutes lettres. */
+  closedDays: A_CONFIRMER,
+  /** TODO liens des pages sociales (URL complètes). */
+  social: { facebook: '', instagram: '' },
+};
+
+const identite: Identite = DONNEES_DEMONSTRATION ? DEMO : REEL;
 
 export const site = {
   /** Enseigne, affichée en arabe — c'est le logotype. Ne pas traduire. */
@@ -25,49 +116,7 @@ export const site = {
   nameFr: 'Maakoulet Bahriyya',
   tagline: 'Poissons & fruits de mer',
 
-  /** TODO raison sociale exacte (mentions légales, facturation). */
-  legalName: A_CONFIRMER,
-  /** TODO une phrase, 150 caractères maximum — sert de meta description. */
-  description: A_CONFIRMER,
-
-  address: {
-    /** TODO numéro et rue. */
-    street: A_CONFIRMER,
-    /** TODO ville — MOT-CLÉ SEO LE PLUS IMPORTANT DU SITE (voir README §SEO). */
-    city: A_CONFIRMER,
-    /** TODO code postal. */
-    postalCode: A_CONFIRMER,
-    country: 'TN',
-  },
-
-  /** TODO coordonnées exactes : clic droit sur le point dans Google Maps. */
-  geo: { lat: 0, lng: 0 },
-
-  /** TODO lien de la fiche d'établissement Google Maps. */
-  googleMapsUrl: '',
-
-  /** TODO numéro principal, format international. */
-  phone: '+216 00 000 000',
-  /** TODO numéro WhatsApp (optionnel), format international sans espaces. */
-  whatsapp: '',
-  /** TODO adresse e-mail professionnelle sur le domaine (optionnel). */
-  email: '',
-
-  /**
-   * TODO horaires réels — alimente le JSON-LD openingHoursSpecification.
-   * Codes de jours : Mo Tu We Th Fr Sa Su. Une entrée par plage horaire.
-   * Exemple avec coupure :
-   *   { days: ['Mo','Tu','We','Th','Fr'], opens: '11:30', closes: '15:00' },
-   *   { days: ['Mo','Tu','We','Th','Fr'], opens: '18:30', closes: '23:00' },
-   */
-  hours: [
-    { days: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'], opens: '00:00', closes: '00:00' },
-  ],
-  /** TODO jour(s) de fermeture, en toutes lettres. */
-  closedDays: A_CONFIRMER,
-
-  /** TODO liens des pages sociales (URL complètes). */
-  social: { facebook: '', instagram: '' },
+  ...identite,
 
   /**
    * Logo fourni par le client.
@@ -139,8 +188,29 @@ export function descriptionSite(): string {
     : `Restaurant de poissons et fruits de mer : arrivage du jour, grillades à la minute, livraison et vente à emporter.`;
 }
 
-/** Libellés des champs encore vides — utilisé par le bandeau de développement. */
+/**
+ * Ce qui reste à obtenir du client — alimente le bandeau de développement.
+ * En mode démonstration, la liste devient celle des valeurs FICTIVES affichées :
+ * c'est exactement ce qu'il faudra remplacer.
+ */
 export function champsManquants(): string[] {
+  if (DONNEES_DEMONSTRATION) {
+    return [
+      'adresse',
+      'téléphone',
+      'WhatsApp',
+      'e-mail',
+      'horaires',
+      'coordonnées GPS',
+      'Facebook et Instagram',
+      'raison sociale',
+      'avis clients',
+      'textes de présentation',
+      'carte et prix',
+      'photos',
+    ];
+  }
+
   const manquants: string[] = [];
   if (!estRenseigne(site.legalName)) manquants.push('raison sociale (legalName)');
   if (!estRenseigne(site.description)) manquants.push('phrase de description');

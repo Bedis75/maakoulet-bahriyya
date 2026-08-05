@@ -276,20 +276,23 @@ async function main() {
   });
   console.log(`✓ Compte administrateur : ${email}`);
 
-  // 2. Réglages par défaut --------------------------------------------------
+  // 2. Réglages de démonstration --------------------------------------------
+  // Fictifs eux aussi : frais, minimum et zones sont à confirmer avec le client
+  // (DONNEES-A-OBTENIR.md §5). `npm run db:reset` les remet tous à zéro.
+  const REGLAGES_DEMO = {
+    isOpenForOrders: true,
+    deliveryFeeMillimes: 3000,
+    minOrderMillimes: 20000,
+    deliveryZones: 'Sousse centre, Khezama, Sahloul, Hammam Sousse, Port El Kantaoui',
+    announcement: 'Arrivage du matin : crevettes royales et daurades.',
+  };
+
   await prisma.setting.upsert({
     where: { id: 1 },
-    update: {},
-    create: {
-      id: 1,
-      isOpenForOrders: true,
-      deliveryFeeMillimes: 0,
-      minOrderMillimes: 0,
-      deliveryZones: '',
-      announcement: null,
-    },
+    update: REGLAGES_DEMO,
+    create: { id: 1, ...REGLAGES_DEMO },
   });
-  console.log('✓ Réglages par défaut');
+  console.log('✓ Réglages de démonstration');
 
   // 3. Carte de démonstration ----------------------------------------------
   let nbProduits = 0;

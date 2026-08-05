@@ -54,6 +54,25 @@ Ces identifiants viennent de `ADMIN_EMAIL` / `ADMIN_PASSWORD` dans `.env`.
 Le client n’a pas fourni la carte, les prix, l’adresse, les horaires ni les photos.
 Le site est donc construit pour que **tout le contenu soit remplaçable sans toucher au code**.
 
+### ⚠ 2.0 Mode démonstration — actuellement ACTIVÉ
+
+Pour pouvoir montrer le site complet, `DONNEES_DEMONSTRATION` vaut `true` dans
+[`src/lib/site.ts`](src/lib/site.ts). **Adresse, téléphone, horaires, réseaux sociaux, avis
+clients et textes de présentation affichés sont alors FICTIFS.**
+
+👉 **[`DONNEES-A-OBTENIR.md`](DONNEES-A-OBTENIR.md) liste tout ce qui est inventé et ce qu’il
+faut obtenir du client.** C’est le document de suivi du projet.
+
+```ts
+// src/lib/site.ts
+export const DONNEES_DEMONSTRATION = false;   // ← avant toute mise en ligne
+```
+
+Repassé à `false`, le site retrouve son comportement de référence : les marqueurs
+« À CONFIRMER » réapparaissent côté code, chaque composant masque proprement ce qui manque,
+et aucun visiteur ne voit une information inventée. Un bandeau rouge le rappelle en
+développement tant que le mode est actif.
+
 ### 2.1 Identité du restaurant → `src/lib/site.ts`
 
 **Un seul fichier à éditer.** Il alimente l’en-tête, le pied de page, la page contact,

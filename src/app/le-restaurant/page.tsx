@@ -6,7 +6,7 @@ import JsonLd from '@/components/JsonLd';
 import Reveal from '@/components/Reveal';
 import { contenu } from '@/lib/contenu';
 import { construireMetadata, jsonLdFilAriane } from '@/lib/seo';
-import { aTelephone, telHref, ville } from '@/lib/site';
+import { aTelephone, DONNEES_DEMONSTRATION, telHref, ville } from '@/lib/site';
 
 const v = ville();
 
@@ -65,9 +65,11 @@ export default function PageRestaurant() {
                 categorie={index % 2 === 0 ? 'poissons-grilles' : 'fruits-de-mer'}
                 className="aspect-[4/3] w-full border border-sel"
               />
-              <figcaption className="mt-2 text-xs text-encre/50">
-                Emplacement réservé à une photo du restaurant.
-              </figcaption>
+              {!DONNEES_DEMONSTRATION && (
+                <figcaption className="mt-2 text-xs text-encre/50">
+                  Emplacement réservé à une photo du restaurant.
+                </figcaption>
+              )}
             </figure>
           </Reveal>
         ))}
@@ -76,8 +78,9 @@ export default function PageRestaurant() {
       <section aria-labelledby="titre-galerie" className="mt-24">
         <h2 id="titre-galerie">La galerie</h2>
         <p className="mt-3 max-w-lecture text-encre/70">
-          Les photos de la salle, de la façade et des plats prendront place ici. En attendant, les
-          emplacements sont réservés — c’est le poste le plus important pour un site de restaurant.
+          {DONNEES_DEMONSTRATION
+            ? 'La façade, la salle, le grill et l’étal du matin.'
+            : 'Les photos de la salle, de la façade et des plats prendront place ici. En attendant, les emplacements sont réservés — c’est le poste le plus important pour un site de restaurant.'}
         </p>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {['La façade', 'La salle', 'Le grill', 'L’étal', 'Le service', 'L’équipe'].map((legende) => (
