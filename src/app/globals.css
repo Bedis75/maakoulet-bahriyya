@@ -7,14 +7,29 @@
    ========================================================================== */
 
 :root {
-  --encre: #08202e; /* bleu-nuit d'encre : texte, sections sombres, l'ardoise */
-  --port: #17557e; /* bleu principal : liens, éléments actifs */
-  --vague: #2e7ba6; /* bleu clair : survol, illustrations */
-  --chaux: #fbfaf6; /* blanc à la chaux : fond de page */
-  --sel: #e4ebef; /* gris-bleu froid : bordures, cartes */
-  --citron: #e8a317; /* ACCENT : actions uniquement, badges « du jour » */
-  --harissa: #b23a2e; /* uniquement : épuisé, erreurs, annulation */
-  --algue: #2f7d5b; /* uniquement : disponible, validation */
+  /* Canaux RVB de la palette.
+     Cette forme est indispensable : elle seule permet les opacités Tailwind
+     (text-sel/80, bg-encre/50…). Avec une valeur hexadécimale dans la var(),
+     Tailwind supprime silencieusement ces classes et l'élément hérite alors
+     de la couleur du body — invisible sur les fonds sombres. */
+  --encre-rvb: 8 32 46; /* #08202E */
+  --port-rvb: 23 85 126; /* #17557E */
+  --vague-rvb: 46 123 166; /* #2E7BA6 */
+  --chaux-rvb: 251 250 246; /* #FBFAF6 */
+  --sel-rvb: 228 235 239; /* #E4EBEF */
+  --citron-rvb: 232 163 23; /* #E8A317 */
+  --harissa-rvb: 178 58 46; /* #B23A2E */
+  --algue-rvb: 47 125 91; /* #2F7D5B */
+
+  /* Couleurs utilisables telles quelles en CSS et dans les SVG. */
+  --encre: rgb(var(--encre-rvb)); /* bleu-nuit d'encre : texte, sections sombres, l'ardoise */
+  --port: rgb(var(--port-rvb)); /* bleu principal : liens, éléments actifs */
+  --vague: rgb(var(--vague-rvb)); /* bleu clair : survol, illustrations */
+  --chaux: rgb(var(--chaux-rvb)); /* blanc à la chaux : fond de page */
+  --sel: rgb(var(--sel-rvb)); /* gris-bleu froid : bordures, cartes */
+  --citron: rgb(var(--citron-rvb)); /* ACCENT : actions uniquement, badges « du jour » */
+  --harissa: rgb(var(--harissa-rvb)); /* uniquement : épuisé, erreurs, annulation */
+  --algue: rgb(var(--algue-rvb)); /* uniquement : disponible, validation */
 
   --font-titre: 'Bricolage Grotesque', system-ui, sans-serif;
   --font-texte: 'Public Sans', system-ui, sans-serif;
@@ -168,7 +183,7 @@
   .bouton-clair {
     background: transparent;
     color: var(--chaux);
-    border-color: rgba(251, 250, 246, 0.45);
+    border-color: rgb(var(--chaux-rvb) / 0.45);
   }
 
   .bouton-clair:hover:not(:disabled) {
@@ -250,8 +265,8 @@
 
   .etiquette-jour {
     color: #7a5300;
-    background: rgba(232, 163, 23, 0.16);
-    border-color: rgba(232, 163, 23, 0.5);
+    background: rgb(var(--citron-rvb) / 0.16);
+    border-color: rgb(var(--citron-rvb) / 0.5);
   }
 }
 
