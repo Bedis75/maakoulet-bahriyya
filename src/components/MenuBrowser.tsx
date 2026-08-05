@@ -73,7 +73,9 @@ export default function MenuBrowser({ categories, ouvert }: Props) {
                   return (
                     <li
                       key={produit.id}
-                      className={`carte flex flex-col overflow-hidden ${epuise ? 'opacity-70' : ''}`}
+                      className={`carte group flex flex-col overflow-hidden transition-colors hover:border-vague ${
+                        epuise ? 'opacity-70' : ''
+                      }`}
                     >
                       <div className="relative">
                         <DishImage

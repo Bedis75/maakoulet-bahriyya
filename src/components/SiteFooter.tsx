@@ -34,19 +34,19 @@ export default function SiteFooter() {
         </div>
 
         <div>
-          <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-citron">Nous trouver</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-sel/50">Nous trouver</h2>
           <address className="mt-4 space-y-2 text-sm not-italic text-sel/85">
             {adresse && <p>{adresse}</p>}
             {aTelephone() && (
               <p>
-                <a href={telHref()} className="prix hover:text-citron">
+                <a href={telHref()} className="prix hover:text-chaux">
                   {site.phone}
                 </a>
               </p>
             )}
             {estRenseigne(site.email) && (
               <p>
-                <a href={`mailto:${site.email}`} className="hover:text-citron">
+                <a href={`mailto:${site.email}`} className="hover:text-chaux">
                   {site.email}
                 </a>
               </p>
@@ -57,7 +57,7 @@ export default function SiteFooter() {
                   href={site.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline underline-offset-4 hover:text-citron"
+                  className="underline underline-offset-4 hover:text-chaux"
                 >
                   Itinéraire
                 </a>
@@ -70,7 +70,7 @@ export default function SiteFooter() {
         </div>
 
         <div>
-          <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-citron">Horaires</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-sel/50">Horaires</h2>
           {aHoraires() ? (
             <ul className="mt-4 space-y-1 text-sm text-sel/85">
               {site.hours.map((plage, index) => (
@@ -91,32 +91,32 @@ export default function SiteFooter() {
         </div>
 
         <div>
-          <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-citron">Le site</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-sel/50">Le site</h2>
           <ul className="mt-4 space-y-2 text-sm text-sel/85">
             <li>
-              <Link href="/carte" className="hover:text-citron">
+              <Link href="/carte" className="hover:text-chaux">
                 La carte
               </Link>
             </li>
             <li>
-              <Link href="/le-restaurant" className="hover:text-citron">
+              <Link href="/le-restaurant" className="hover:text-chaux">
                 Le restaurant
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-citron">
+              <Link href="/contact" className="hover:text-chaux">
                 Contact
               </Link>
             </li>
             <li>
-              <Link href="/panier" className="hover:text-citron">
+              <Link href="/panier" className="hover:text-chaux">
                 Mon panier
               </Link>
             </li>
             {/* Visible uniquement tant que le site utilise des photos empruntées. */}
             {getCreditsPhotos().length > 0 && (
               <li>
-                <Link href="/credits-photos" className="hover:text-citron">
+                <Link href="/credits-photos" className="hover:text-chaux">
                   Crédits photos
                 </Link>
               </li>
@@ -131,7 +131,7 @@ export default function SiteFooter() {
                     href={site.social.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline underline-offset-4 hover:text-citron"
+                    className="underline underline-offset-4 hover:text-chaux"
                   >
                     Facebook
                   </a>
@@ -143,7 +143,7 @@ export default function SiteFooter() {
                     href={site.social.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline underline-offset-4 hover:text-citron"
+                    className="underline underline-offset-4 hover:text-chaux"
                   >
                     Instagram
                   </a>

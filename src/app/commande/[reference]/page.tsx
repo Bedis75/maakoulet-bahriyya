@@ -54,7 +54,7 @@ export default async function PageConfirmation({ params }: { params: { reference
             'Vous payez en espèces à la remise de la commande.',
           ].map((etape, index) => (
             <li key={etape} className="flex gap-4">
-              <span className="prix text-citron">0{index + 1}</span>
+              <span className="prix text-port">0{index + 1}</span>
               <span className="text-encre/80">{etape}</span>
             </li>
           ))}

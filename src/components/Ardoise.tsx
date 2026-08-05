@@ -38,13 +38,15 @@ export default async function Ardoise() {
   return (
     <section
       aria-labelledby="titre-ardoise"
-      className="bg-encre p-6 text-chaux shadow-[0_20px_50px_-30px_rgba(8,32,46,0.8)] sm:p-8"
+      // Ombre portée basse + filet intérieur clair : le panneau se décolle de la
+      // page comme une ardoise posée contre un mur, sans effet de relief.
+      className="bg-encre p-6 text-chaux shadow-[0_20px_50px_-30px_rgb(var(--encre-rvb)/0.8),inset_0_0_0_1px_rgb(var(--chaux-rvb)/0.08)] sm:p-8"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-chaux/20 pb-4">
         <h2 id="titre-ardoise" className="text-[1.6rem] text-chaux sm:text-[2rem]">
           L’arrivage du jour
         </h2>
-        <p className="prix text-xs uppercase tracking-[0.12em] text-citron">{dateDuJour()}</p>
+        <p className="prix text-xs uppercase tracking-[0.12em] text-sel/55">{dateDuJour()}</p>
       </div>
 
       {produits.length === 0 ? (
@@ -85,7 +87,10 @@ export default async function Ardoise() {
                 </span>
 
                 {/* Trait de conduite entre le nom et le prix, comme sur une ardoise. */}
-                <span aria-hidden="true" className="hidden h-px flex-1 self-center bg-chaux/15 sm:block" />
+                <span
+                  aria-hidden="true"
+                  className="filet-pointille hidden flex-1 self-center text-sel sm:block"
+                />
 
                 <span className="order-last w-full text-sm text-sel/60 sm:order-none sm:w-auto sm:max-w-[16rem] sm:truncate">
                   {note}

@@ -56,6 +56,30 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Le grain du mur à la chaux. Volontairement à la limite du perceptible :
+     il enlève au fond son côté « écran » sans jamais gêner la lecture.
+     z-index négatif = au-dessus du fond de page, sous tout le contenu ;
+     position fixed = aucun repaint au défilement. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  /* Évite les lignes veuves : la dernière ligne d'un paragraphe ne se retrouve
+     plus seule avec un mot. Les titres, eux, sont déjà en text-wrap: balance. */
+  p,
+  li,
+  dd,
+  figcaption,
+  blockquote {
+    text-wrap: pretty;
+  }
+
   h1,
   h2,
   h3,
@@ -165,8 +189,15 @@
     color: var(--encre);
   }
 
+  /* Le bouton d'action se soulève d'un pixel : assez pour que la main sente
+     qu'elle a visé juste, trop peu pour qu'on appelle ça une animation. */
   .bouton-action:hover:not(:disabled) {
     background: #f2b02a;
+    transform: translateY(-1px);
+  }
+
+  .bouton-action:active:not(:disabled) {
+    transform: translateY(0);
   }
 
   .bouton-secondaire {
@@ -232,11 +263,37 @@
   .lien-souligne {
     color: var(--port);
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: rgb(var(--port-rvb) / 0.35);
+    transition:
+      color 0.15s ease,
+      text-decoration-color 0.15s ease;
   }
 
   .lien-souligne:hover {
     color: var(--vague);
+    text-decoration-color: currentColor;
+  }
+
+  /* Le trait de conduite d'une ardoise de marché : des points, pas un filet.
+     C'est ce qui relie le nom du poisson à son prix sur un vrai panneau. */
+  .filet-pointille {
+    height: 1px;
+    background-image: radial-gradient(currentColor 0.5px, transparent 0.5px);
+    background-size: 5px 1px;
+    background-repeat: repeat-x;
+    background-position: left center;
+    opacity: 0.35;
+  }
+
+  /* Photo qui s'approche très lentement au survol de sa carte. */
+  .zoom-photo {
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .group:hover .zoom-photo {
+    transform: scale(1.04);
   }
 
   /* --- Étiquettes d'état ------------------------------------------------- */
@@ -301,6 +358,12 @@
 
   .revelation {
     opacity: 1;
+    transform: none;
+  }
+
+  /* Le rapprochement de la photo est un mouvement : on le retire aussi. */
+  .group:hover .zoom-photo,
+  .bouton-action:hover:not(:disabled) {
     transform: none;
   }
 }

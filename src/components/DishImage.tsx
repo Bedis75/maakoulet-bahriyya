@@ -33,7 +33,7 @@ export default function DishImage({
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover"
+          className="zoom-photo object-cover"
         />
       </div>
     );
@@ -41,7 +41,9 @@ export default function DishImage({
 
   return (
     <div className={`relative overflow-hidden ${className}`} aria-hidden="true">
-      <MotifDeRepli categorie={categorie} nom={nom} />
+      <div className="zoom-photo h-full w-full">
+        <MotifDeRepli categorie={categorie} nom={nom} />
+      </div>
     </div>
   );
 }

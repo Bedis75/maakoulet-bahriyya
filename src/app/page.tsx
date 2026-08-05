@@ -85,7 +85,7 @@ export default async function PageAccueil() {
               delai={index * 80}
               className="bg-white px-6 py-10 sm:px-8"
             >
-              <p className="prix text-xs text-citron">0{index + 1}</p>
+              <p className="prix text-xs text-port">0{index + 1}</p>
               <h3 className="mt-3">{argument.titre}</h3>
               <p className="mt-3 text-encre/75">{argument.texte}</p>
             </Reveal>
@@ -125,7 +125,10 @@ export default async function PageAccueil() {
 
                 <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {categorie.products.map((produit) => (
-                    <li key={produit.id} className="carte flex flex-col overflow-hidden">
+                    <li
+                      key={produit.id}
+                      className="carte group flex flex-col overflow-hidden transition-colors hover:border-vague"
+                    >
                       <DishImage
                         imageUrl={produit.imageUrl}
                         nom={produit.name}

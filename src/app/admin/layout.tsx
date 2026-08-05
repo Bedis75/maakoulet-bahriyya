@@ -29,7 +29,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <Link href="/admin" className="shrink-0" aria-label="Tableau de bord">
               <Wordmark taille="pied" clair />
             </Link>
-            <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-citron">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-sel/55">
               Administration
             </span>
           </div>
