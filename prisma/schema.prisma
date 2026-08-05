@@ -1,0 +1,100 @@
+// Passage en production : remplacer provider par "postgresql" et pointer
+// DATABASE_URL sur la base Neon / Supabase. Aucun autre changement nécessaire.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  slug        String    @unique
+  name        String
+  description String?
+  position    Int       @default(0)
+  products    Product[]
+}
+
+model Product {
+  id            Int      @id @default(autoincrement())
+  slug          String   @unique
+  name          String
+  description   String?
+  priceMillimes Int
+  unit          String   @default("PIECE") // PIECE | KG | PORTION
+  imageUrl      String?
+  stock         Int? // null = illimité
+  isAvailable   Boolean  @default(true)
+  isCatchOfDay  Boolean  @default(false) // affiché sur l'ardoise
+  position      Int      @default(0)
+  updatedAt     DateTime @updatedAt
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  orderItems OrderItem[]
+
+  @@index([categoryId])
+}
+
+model Order {
+  id               Int      @id @default(autoincrement())
+  reference        String   @unique // ex. MB-4F2A9C
+  type             String // DELIVERY | PICKUP
+  status           String   @default("NEW") // NEW|CONFIRMED|PREPARING|READY|COMPLETED|CANCELLED
+  customerName     String
+  phone            String
+  address          String?
+  city             String?
+  slot             String?
+  note             String?
+  subtotalMillimes Int
+  deliveryMillimes Int      @default(0)
+  totalMillimes    Int
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  items OrderItem[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id      Int   @id @default(autoincrement())
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  name              String // nom et prix FIGÉS au moment de la commande
+  unit              String @default("PIECE")
+  unitPriceMillimes Int
+  quantity          Int
+  lineTotalMillimes Int
+
+  @@index([orderId])
+}
+
+model Setting {
+  id                  Int      @id @default(1)
+  isOpenForOrders     Boolean  @default(true)
+  deliveryFeeMillimes Int      @default(0)
+  minOrderMillimes    Int      @default(0)
+  deliveryZones       String   @default("") // zones séparées par des virgules
+  announcement        String? // bandeau en haut du site
+  updatedAt           DateTime @updatedAt
+}
+
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String   @default("Administrateur")
+  passwordHash String
+  createdAt    DateTime @default(now())
+}

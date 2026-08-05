@@ -1,0 +1,299 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Direction artistique — « L'ardoise du port »
+   ========================================================================== */
+
+:root {
+  --encre: #08202e; /* bleu-nuit d'encre : texte, sections sombres, l'ardoise */
+  --port: #17557e; /* bleu principal : liens, éléments actifs */
+  --vague: #2e7ba6; /* bleu clair : survol, illustrations */
+  --chaux: #fbfaf6; /* blanc à la chaux : fond de page */
+  --sel: #e4ebef; /* gris-bleu froid : bordures, cartes */
+  --citron: #e8a317; /* ACCENT : actions uniquement, badges « du jour » */
+  --harissa: #b23a2e; /* uniquement : épuisé, erreurs, annulation */
+  --algue: #2f7d5b; /* uniquement : disponible, validation */
+
+  --font-titre: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-texte: 'Public Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-arabe: 'Noto Kufi Arabic', 'Cairo', serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--sel);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--chaux);
+    color: var(--encre);
+    font-family: var(--font-texte);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titre);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+
+  h3 {
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+  }
+
+  /* Focus clavier visible partout — critère d'accessibilité non négociable. */
+  :focus-visible {
+    outline: 2px solid var(--citron);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--citron);
+    color: var(--encre);
+  }
+
+  /* Champs de formulaire : même grammaire visuelle partout. */
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    background: #fff;
+    border: 1px solid var(--sel);
+    border-radius: 2px;
+    padding: 0.6rem 0.75rem;
+    width: 100%;
+    color: var(--encre);
+  }
+
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--vague);
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    width: auto;
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .conteneur {
+    max-width: 1180px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .conteneur {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* --- Boutons ----------------------------------------------------------- */
+
+  .bouton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px; /* cible tactile */
+    padding: 0.7rem 1.4rem;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  /* Le citron ne sert QU'AUX ACTIONS : commander, ajouter, enregistrer. */
+  .bouton-action {
+    background: var(--citron);
+    color: var(--encre);
+  }
+
+  .bouton-action:hover:not(:disabled) {
+    background: #f2b02a;
+  }
+
+  .bouton-secondaire {
+    background: transparent;
+    color: var(--encre);
+    border-color: var(--encre);
+  }
+
+  .bouton-secondaire:hover:not(:disabled) {
+    background: var(--encre);
+    color: var(--chaux);
+  }
+
+  .bouton-clair {
+    background: transparent;
+    color: var(--chaux);
+    border-color: rgba(251, 250, 246, 0.45);
+  }
+
+  .bouton-clair:hover:not(:disabled) {
+    background: var(--chaux);
+    color: var(--encre);
+  }
+
+  .bouton-danger {
+    background: transparent;
+    color: var(--harissa);
+    border-color: var(--harissa);
+  }
+
+  .bouton-danger:hover:not(:disabled) {
+    background: var(--harissa);
+    color: #fff;
+  }
+
+  .bouton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* --- Blocs ------------------------------------------------------------- */
+
+  .carte {
+    background: #fff;
+    border: 1px solid var(--sel);
+    border-radius: 2px;
+  }
+
+  .prix {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .surtitre {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--port);
+  }
+
+  .lien-souligne {
+    color: var(--port);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .lien-souligne:hover {
+    color: var(--vague);
+  }
+
+  /* --- Étiquettes d'état ------------------------------------------------- */
+
+  .etiquette {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .etiquette-epuise {
+    color: var(--harissa);
+  }
+
+  .etiquette-dispo {
+    color: var(--algue);
+  }
+
+  .etiquette-jour {
+    color: #7a5300;
+    background: rgba(232, 163, 23, 0.16);
+    border-color: rgba(232, 163, 23, 0.5);
+  }
+}
+
+/* --- Apparition au scroll -------------------------------------------------
+   Le seul mouvement du site, avec les états de survol. */
+
+.revelation {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.revelation.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .revelation {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Le logotype arabe : seul élément en RTL du document. */
+.logotype-ar {
+  font-family: var(--font-arabe);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
