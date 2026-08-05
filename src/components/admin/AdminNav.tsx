@@ -24,7 +24,7 @@ export default function AdminNav() {
               <Link
                 href={lien.href}
                 aria-current={actif ? 'page' : undefined}
-                className={`block whitespace-nowrap px-4 py-2 text-sm font-semibold ${
+                className={`flex min-h-[44px] items-center whitespace-nowrap px-4 text-sm font-semibold ${
                   actif ? 'bg-chaux text-encre' : 'text-sel/80 hover:bg-chaux/10 hover:text-chaux'
                 }`}
               >

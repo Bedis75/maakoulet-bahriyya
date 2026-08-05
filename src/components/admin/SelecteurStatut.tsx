@@ -33,7 +33,7 @@ export default function SelecteurStatut({
                   setTimeout(() => setMessage(null), 2500);
                 })
               }
-              className={`border px-3 py-2 text-xs font-semibold transition-colors ${
+              className={`inline-flex min-h-[44px] flex-1 items-center justify-center whitespace-nowrap border px-3 text-xs font-semibold transition-colors sm:flex-none ${
                 actif
                   ? valeur === 'CANCELLED'
                     ? 'border-harissa bg-harissa text-white'

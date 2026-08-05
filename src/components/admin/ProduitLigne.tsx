@@ -149,7 +149,7 @@ export default function ProduitLigne({
             aria-label={`Monter ${produit.name}`}
             disabled={enCours}
             onClick={() => lancer(() => deplacerProduitAction(produit.id, 'haut'))}
-            className="h-9 w-9 border border-sel bg-white hover:border-vague"
+            className="h-11 w-11 border border-sel bg-white hover:border-vague"
           >
             ↑
           </button>
@@ -158,7 +158,7 @@ export default function ProduitLigne({
             aria-label={`Descendre ${produit.name}`}
             disabled={enCours}
             onClick={() => lancer(() => deplacerProduitAction(produit.id, 'bas'))}
-            className="h-9 w-9 border border-sel bg-white hover:border-vague"
+            className="h-11 w-11 border border-sel bg-white hover:border-vague"
           >
             ↓
           </button>

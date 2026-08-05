@@ -71,7 +71,7 @@ export default function CategorieBloc({
             aria-label={`Monter la catégorie ${categorie.name}`}
             disabled={enCours}
             onClick={() => lancer(() => deplacerCategorieAction(categorie.id, 'haut'))}
-            className="h-9 w-9 border border-sel bg-white hover:border-vague"
+            className="h-11 w-11 border border-sel bg-white hover:border-vague"
           >
             ↑
           </button>
@@ -80,7 +80,7 @@ export default function CategorieBloc({
             aria-label={`Descendre la catégorie ${categorie.name}`}
             disabled={enCours}
             onClick={() => lancer(() => deplacerCategorieAction(categorie.id, 'bas'))}
-            className="h-9 w-9 border border-sel bg-white hover:border-vague"
+            className="h-11 w-11 border border-sel bg-white hover:border-vague"
           >
             ↓
           </button>

@@ -7,6 +7,8 @@ type Props = {
   taille?: 'entete' | 'pied' | 'grand';
   /** Affiche « Poissons & fruits de mer » sous le nom. */
   sousTitre?: boolean;
+  /** false = sous-titre masqué en dessous de 640px, faute de place. */
+  sousTitreDesMobile?: boolean;
   /** Texte clair sur fond sombre. */
   clair?: boolean;
 };
@@ -22,7 +24,12 @@ const TAILLES = {
  * Seul cet élément est en RTL — le document reste lang="fr" dir="ltr".
  * Si le client fournit un vrai logo, il suffit de renseigner `site.logo`.
  */
-export default function Wordmark({ taille = 'entete', sousTitre = false, clair = false }: Props) {
+export default function Wordmark({
+  taille = 'entete',
+  sousTitre = false,
+  sousTitreDesMobile = true,
+  clair = false,
+}: Props) {
   const alt = `${site.nameFr} — poissons et fruits de mer`;
 
   if (site.logo) {
@@ -51,8 +58,8 @@ export default function Wordmark({ taille = 'entete', sousTitre = false, clair =
       {sousTitre && (
         <span
           className={`mt-1 font-mono text-[0.62rem] uppercase tracking-[0.18em] ${
-            clair ? 'text-sel/80' : 'text-port'
-          }`}
+            sousTitreDesMobile ? '' : 'hidden sm:block'
+          } ${clair ? 'text-sel/80' : 'text-port'}`}
         >
           {site.tagline}
         </span>

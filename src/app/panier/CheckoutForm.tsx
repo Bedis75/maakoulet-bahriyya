@@ -154,7 +154,7 @@ export default function CheckoutForm({
                 <div className="flex items-center border border-sel bg-white">
                   <button
                     type="button"
-                    className="h-10 w-10 text-lg leading-none hover:bg-sel"
+                    className="h-11 w-11 text-lg leading-none hover:bg-sel"
                     onClick={() => definirQuantite(ligne.productId, ligne.quantity - 1)}
                     aria-label={`Diminuer la quantité de ${ligne.name}`}
                   >
@@ -163,7 +163,7 @@ export default function CheckoutForm({
                   <span className="prix w-10 text-center text-sm">{ligne.quantity}</span>
                   <button
                     type="button"
-                    className="h-10 w-10 text-lg leading-none hover:bg-sel"
+                    className="h-11 w-11 text-lg leading-none hover:bg-sel"
                     onClick={() => definirQuantite(ligne.productId, ligne.quantity + 1)}
                     aria-label={`Augmenter la quantité de ${ligne.name}`}
                   >

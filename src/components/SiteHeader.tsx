@@ -25,9 +25,11 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-sel bg-chaux/95 backdrop-blur">
-      <div className="conteneur flex h-[72px] items-center justify-between gap-4">
-        <Link href="/" className="shrink-0" aria-label="Accueil">
-          <Wordmark taille="entete" sousTitre />
+      <div className="conteneur flex h-[72px] items-center justify-between gap-2 sm:gap-4">
+        {/* Le sous-titre est masqué sous 640px : avec lui, le logotype (shrink-0),
+            le panier et le menu dépassent la largeur utile d'un écran de 360px. */}
+        <Link href="/" className="min-w-0 shrink-0" aria-label="Accueil">
+          <Wordmark taille="entete" sousTitre sousTitreDesMobile={false} />
         </Link>
 
         <nav aria-label="Navigation principale" className="hidden items-center gap-7 md:flex">

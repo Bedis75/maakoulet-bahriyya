@@ -135,7 +135,7 @@ function BoutonFiltre({
       type="button"
       onClick={onClick}
       aria-pressed={actif}
-      className={`whitespace-nowrap border px-4 py-2 text-sm font-semibold transition-colors ${
+      className={`inline-flex min-h-[44px] items-center whitespace-nowrap border px-4 text-sm font-semibold transition-colors ${
         actif
           ? 'border-encre bg-encre text-chaux'
           : 'border-sel bg-white text-encre hover:border-vague'

@@ -76,7 +76,7 @@ export default function CartDrawer() {
                     <div className="flex items-center border border-sel bg-white">
                       <button
                         type="button"
-                        className="h-9 w-9 text-lg leading-none hover:bg-sel"
+                        className="h-11 w-11 text-lg leading-none hover:bg-sel"
                         onClick={() => definirQuantite(ligne.productId, ligne.quantity - 1)}
                         aria-label={`Retirer un ${ligne.name}`}
                       >
@@ -85,7 +85,7 @@ export default function CartDrawer() {
                       <span className="prix w-10 text-center text-sm">{ligne.quantity}</span>
                       <button
                         type="button"
-                        className="h-9 w-9 text-lg leading-none hover:bg-sel"
+                        className="h-11 w-11 text-lg leading-none hover:bg-sel"
                         onClick={() => definirQuantite(ligne.productId, ligne.quantity + 1)}
                         aria-label={`Ajouter un ${ligne.name}`}
                       >

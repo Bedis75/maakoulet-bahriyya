@@ -177,7 +177,7 @@ function Lien({
     <Link
       href={href}
       aria-current={actif ? 'true' : undefined}
-      className={`border px-3 py-2 text-xs font-semibold ${
+      className={`inline-flex min-h-[44px] items-center whitespace-nowrap border px-3 text-xs font-semibold ${
         actif ? 'border-encre bg-encre text-chaux' : 'border-sel bg-white hover:border-vague'
       }`}
     >
