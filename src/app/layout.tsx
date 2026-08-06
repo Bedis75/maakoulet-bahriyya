@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import '@/app/globals.css';
 
 import AnnouncementBar from '@/components/AnnouncementBar';
+import BarreStatut from '@/components/BarreStatut';
 import CartDrawer from '@/components/CartDrawer';
 import { CartProvider } from '@/components/CartProvider';
 import ChromeSite from '@/components/ChromeSite';
@@ -85,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <>
                 <DevTodoBanner />
                 <AnnouncementBar />
+                <BarreStatut />
                 <SiteHeader />
               </>
             }

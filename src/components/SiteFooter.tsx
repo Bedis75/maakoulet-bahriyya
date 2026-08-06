@@ -23,8 +23,13 @@ export default function SiteFooter() {
   const v = ville();
 
   return (
-    <footer className="mt-24 bg-encre text-chaux">
-      <div className="conteneur grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="relative mt-24 overflow-hidden bg-encre text-chaux">
+      {/* Filigrane de l'enseigne — décoratif, masqué aux lecteurs d'écran. */}
+      <span className="filigrane" lang="ar" dir="rtl" aria-hidden="true">
+        {site.nameAr}
+      </span>
+
+      <div className="conteneur relative z-10 grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Wordmark taille="pied" sousTitre clair />
           <p className="mt-4 max-w-xs text-sm text-sel/75">
@@ -154,7 +159,7 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-chaux/15">
+      <div className="relative z-10 border-t border-chaux/15">
         <div className="conteneur flex flex-col gap-2 py-5 text-xs text-sel/60 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {estRenseigne(site.legalName) ? site.legalName : site.nameFr}

@@ -68,7 +68,6 @@ const CARTE: CategorieCarte[] = [
         priceMillimes: 6000,
         unit: 'PORTION',
         imageUrl: '/photos/salade-mechouia.jpg',
-        isCatchOfDay: true,
       },
       {
         slug: 'salade-tunisienne',
@@ -130,7 +129,6 @@ const CARTE: CategorieCarte[] = [
         priceMillimes: 15000,
         unit: 'PORTION',
         imageUrl: '/photos/escalope-panee.jpg',
-        isCatchOfDay: true,
       },
       {
         slug: 'escalope-grillee',
@@ -149,7 +147,6 @@ const CARTE: CategorieCarte[] = [
         priceMillimes: 18000,
         unit: 'PORTION',
         imageUrl: '/photos/escalope-merguez.jpg',
-        isCatchOfDay: true,
       },
       {
         slug: 'poulet-couscous',
@@ -159,7 +156,6 @@ const CARTE: CategorieCarte[] = [
         priceMillimes: 14000,
         unit: 'PORTION',
         imageUrl: '/photos/poulet-couscous.jpg',
-        isCatchOfDay: true,
       },
       {
         slug: 'kamounia',
@@ -169,7 +165,6 @@ const CARTE: CategorieCarte[] = [
         priceMillimes: 13000,
         unit: 'PORTION',
         imageUrl: '/photos/kamounia.jpg',
-        isCatchOfDay: true,
         stock: 8,
       },
       {
@@ -206,7 +201,6 @@ const CARTE: CategorieCarte[] = [
         priceMillimes: 18000,
         unit: 'PORTION',
         imageUrl: '/photos/spaghetti-crevettes.jpg',
-        isCatchOfDay: true,
       },
       {
         slug: 'spaghetti-viande',
@@ -262,6 +256,7 @@ const CARTE: CategorieCarte[] = [
           'Sardines du jour grillées entières au charbon, servies avec harissa, citron et pain. Le plat le plus simple de la carte.',
         priceMillimes: 15000,
         unit: 'KG',
+        isCatchOfDay: true,
       },
       {
         slug: 'crevettes-royales',
@@ -280,6 +275,7 @@ const CARTE: CategorieCarte[] = [
           'Anneaux de calamar farinés et frits minute, servis très chauds avec une sauce citronnée et des frites.',
         priceMillimes: 20000,
         unit: 'PORTION',
+        isCatchOfDay: true,
       },
       {
         slug: 'poulpe-grille',

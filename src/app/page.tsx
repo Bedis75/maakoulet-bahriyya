@@ -4,7 +4,7 @@ import Ardoise from '@/components/Ardoise';
 import DishImage from '@/components/DishImage';
 import Reveal from '@/components/Reveal';
 import { contenu } from '@/lib/contenu';
-import { prixAvecUnite } from '@/lib/money';
+import { formatMillimes, suffixeUnite } from '@/lib/money';
 import { prisma } from '@/lib/prisma';
 import {
   aGeo,
@@ -144,7 +144,10 @@ export default async function PageAccueil() {
                           </p>
                         )}
                         <p className="prix mt-4 font-semibold">
-                          {prixAvecUnite(produit.priceMillimes, produit.unit)}
+                          {formatMillimes(produit.priceMillimes)}
+                          <span className="text-sm font-normal text-encre/45">
+                            {suffixeUnite(produit.unit)}
+                          </span>
                         </p>
                       </div>
                     </li>
@@ -155,6 +158,12 @@ export default async function PageAccueil() {
           </div>
         )}
       </section>
+
+      <div className="conteneur">
+        <div className="ornement" aria-hidden="true">
+          <span />
+        </div>
+      </div>
 
       {/* -------------------------------------------- Horaires + itinéraire */}
       <section aria-labelledby="titre-venir" className="border-y border-sel bg-white py-20">
@@ -253,7 +262,7 @@ export default async function PageAccueil() {
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {contenu.avis.map((avis) => (
               <li key={avis.auteur} className="carte p-6">
-                <blockquote className="text-encre/85">« {avis.texte} »</blockquote>
+                <blockquote className="guillemet text-encre/85">{avis.texte}</blockquote>
                 <p className="prix mt-4 text-xs uppercase tracking-[0.1em] text-port">
                   {avis.auteur}
                 </p>

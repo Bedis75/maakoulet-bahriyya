@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 import AddToCart from '@/components/AddToCart';
 import DishImage from '@/components/DishImage';
 import { estEpuise, estStockBas, type CategoriePublique } from '@/lib/catalogue';
-import { prixAvecUnite } from '@/lib/money';
+import { formatMillimes, suffixeUnite } from '@/lib/money';
 
 type Props = {
   categories: CategoriePublique[];
@@ -105,7 +105,10 @@ export default function MenuBrowser({ categories, ouvert }: Props) {
                           <p className="mt-2 text-sm text-encre/70">{produit.description}</p>
                         )}
                         <p className="prix mt-4 text-lg font-semibold">
-                          {prixAvecUnite(produit.priceMillimes, produit.unit)}
+                          {formatMillimes(produit.priceMillimes)}
+                          <span className="text-sm font-normal text-encre/45">
+                            {suffixeUnite(produit.unit)}
+                          </span>
                         </p>
                         <div className="mt-4 pt-1">
                           <AddToCart produit={produit} epuise={epuise} ouvert={ouvert} />

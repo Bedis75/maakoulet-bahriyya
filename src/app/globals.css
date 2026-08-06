@@ -287,6 +287,62 @@
     opacity: 0.35;
   }
 
+  /* Séparateur de sections : deux filets et un losange. Le seul ornement du
+     site — il donne aux pages le rythme d'une carte imprimée. */
+  .ornement {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: var(--sel);
+  }
+
+  .ornement::before,
+  .ornement::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .ornement > span {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    transform: rotate(45deg);
+    border: 1px solid var(--port);
+    opacity: 0.5;
+  }
+
+  /* Le logotype arabe en filigrane, très grand et presque effacé, au fond du
+     pied de page : l'enseigne signe la page sans se répéter en toutes lettres. */
+  .filigrane {
+    position: absolute;
+    right: -0.05em;
+    bottom: -0.22em;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    font-family: var(--font-arabe);
+    font-weight: 700;
+    font-size: clamp(6rem, 20vw, 15rem);
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--chaux);
+    opacity: 0.045;
+    white-space: nowrap;
+  }
+
+  /* Guillemet ouvrant des avis clients, en très gros et en retrait. */
+  .guillemet::before {
+    content: '«';
+    display: block;
+    font-family: var(--font-titre);
+    font-size: 3rem;
+    line-height: 0.6;
+    color: var(--sel);
+    margin-bottom: 0.5rem;
+  }
+
   /* Photo qui s'approche très lentement au survol de sa carte. */
   .zoom-photo {
     transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
