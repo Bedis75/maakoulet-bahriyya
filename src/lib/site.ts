@@ -45,7 +45,7 @@ type Identite = {
 const DEMO: Identite = {
   legalName: 'Maakoulet Bahriyya SARL',
   description:
-    'Restaurant de poissons et fruits de mer à Sousse : arrivage quotidien du port, grillades à la minute, livraison et vente à emporter.',
+    'Cuisine tunisienne et fruits de mer à Sousse : plats du jour, grillades, tajines et poisson frais. Livraison et vente à emporter.',
   address: {
     street: 'Avenue Hédi Chaker, face au port de pêche',
     city: 'Sousse',
@@ -114,7 +114,12 @@ export const site = {
   nameAr: 'مأكولات بحرية',
   /** Translittération utilisée dans les textes français, les URL et le code. */
   nameFr: 'Maakoulet Bahriyya',
-  tagline: 'Poissons & fruits de mer',
+  /**
+   * L'enseigne parle de fruits de mer, mais la cuisine est tunisienne au sens
+   * large : escalopes, poulet rôti, kamounia, tajines, pâtes, riz djerbien.
+   * Le sous-titre doit refléter la carte réelle, pas seulement le nom.
+   */
+  tagline: 'Cuisine tunisienne & fruits de mer',
 
   ...identite,
 
@@ -184,8 +189,8 @@ export function descriptionSite(): string {
   if (estRenseigne(site.description)) return site.description;
   const v = ville();
   return v
-    ? `Restaurant de poissons et fruits de mer à ${v} : arrivage du jour, grillades à la minute, livraison et vente à emporter.`
-    : `Restaurant de poissons et fruits de mer : arrivage du jour, grillades à la minute, livraison et vente à emporter.`;
+    ? `Cuisine tunisienne et fruits de mer à ${v} : plats du jour, grillades, tajines et poisson frais. Livraison et vente à emporter.`
+    : `Cuisine tunisienne et fruits de mer : plats du jour, grillades, tajines et poisson frais. Livraison et vente à emporter.`;
 }
 
 /**

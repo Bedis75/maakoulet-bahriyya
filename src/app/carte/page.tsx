@@ -10,10 +10,10 @@ import { ville } from '@/lib/site';
 const v = ville();
 
 export const metadata: Metadata = construireMetadata({
-  titre: v ? `Carte — poisson et fruits de mer à ${v}` : 'Notre carte',
+  titre: v ? `Carte — cuisine tunisienne et poisson à ${v}` : 'Notre carte',
   description: v
-    ? `Poissons grillés au kilo, fruits de mer, couscous et plats du jour à ${v}. Prix à jour, commande en ligne, livraison et à emporter.`
-    : 'Poissons grillés au kilo, fruits de mer, couscous et plats du jour. Prix à jour, commande en ligne, livraison et à emporter.',
+    ? `Escalopes, poulet rôti, kamounia, tajines, pâtes et poisson frais à ${v}. Prix à jour, commande en ligne, livraison et à emporter.`
+    : 'Escalopes, poulet rôti, kamounia, tajines, pâtes et poisson frais. Prix à jour, commande en ligne, livraison et à emporter.',
   chemin: '/carte',
 });
 
@@ -59,8 +59,8 @@ export default async function PageCarte() {
         Tout ce qu’on sert{v ? `, à ${v}` : ''}
       </h1>
       <p className="mt-6 max-w-lecture text-lg text-encre/75">
-        Les poissons entiers sont vendus au kilo et pesés devant vous. Le reste est à la pièce ou à
-        la portion. Les prix affichés ici sont ceux du jour.
+        Les plats arrivent complets, avec leurs pâtes, leurs frites et leurs salades. Les poissons
+        entiers sont vendus au kilo et pesés avant cuisson. Les prix affichés ici sont ceux du jour.
       </p>
 
       {!reglages.isOpenForOrders && (

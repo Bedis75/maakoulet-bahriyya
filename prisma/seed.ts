@@ -9,254 +9,314 @@ const prisma = new PrismaClient();
 
 /**
  * ---------------------------------------------------------------------------
- *  DONNÉES DE DÉMONSTRATION
+ *  CARTE DU RESTAURANT
  * ---------------------------------------------------------------------------
- *  Rien ici ne vient du client. Toutes les descriptions commencent par [DÉMO]
- *  et les prix sont des valeurs rondes manifestement provisoires.
- *  Quand la vraie carte arrivera : `npm run db:reset` puis saisie dans /admin/carte.
+ *  Les plats et les photos viennent du restaurant : ce sont ses vrais plats,
+ *  photographiés chez lui. Les descriptions ont été écrites d'après les photos
+ *  et restent à faire valider.
+ *
+ *  ⚠ LES PRIX SONT ENCORE FICTIFS — valeurs rondes, à remplacer par les vrais
+ *  (voir DONNEES-A-OBTENIR.md §4). De même pour le mode de vente : au kilo ou
+ *  à la portion selon les poissons, à confirmer.
+ *
+ *  Les poissons sans photo maison utilisent des photos empruntées sous licence
+ *  libre, installées séparément par `npm run photos:demo`.
  * ---------------------------------------------------------------------------
  */
 
-const D = '[DÉMO] ';
-
-type ProduitDemo = {
+type ProduitCarte = {
   slug: string;
   name: string;
   description: string;
   priceMillimes: number;
   unit: 'PIECE' | 'KG' | 'PORTION';
+  /** Photo du restaurant. Absent = photo empruntée ou motif SVG. */
+  imageUrl?: string;
   stock?: number | null;
   isAvailable?: boolean;
   isCatchOfDay?: boolean;
 };
 
-type CategorieDemo = {
+type CategorieCarte = {
   slug: string;
   name: string;
   description: string;
-  produits: ProduitDemo[];
+  produits: ProduitCarte[];
 };
 
-const CARTE_DEMO: CategorieDemo[] = [
+const CARTE: CategorieCarte[] = [
   {
     slug: 'entrees',
-    name: 'Entrées',
+    name: 'Entrées & salades',
     description:
-      D + 'Salades fraîches et petites assiettes à partager, préparées le matin même.',
+      'Les entrées se préparent le matin même : poivrons grillés au feu, thon, olives, huile d’olive. À partager ou à prendre avec un plat.',
     produits: [
       {
-        slug: 'salade-mechouia-thon',
-        name: 'Salade mechouia au thon',
-        description: D + 'Poivrons et tomates grillés, thon, olives, œuf dur, filet d’huile d’olive.',
-        priceMillimes: 8000,
-        unit: 'PORTION',
-      },
-      {
-        slug: 'brik-aux-crevettes',
-        name: 'Brik aux crevettes',
-        description: D + 'Feuille de malsouka croustillante, crevettes, fromage, persil, citron.',
-        priceMillimes: 6000,
+        slug: 'brik',
+        name: 'Brik',
+        description:
+          'Feuille de malsouka frite minute, garnie et refermée en triangle, servie brûlante avec un quartier de citron.',
+        priceMillimes: 4000,
         unit: 'PIECE',
+        imageUrl: '/photos/brik.jpg',
       },
       {
-        slug: 'salade-de-poulpe',
-        name: 'Salade de poulpe',
-        description: D + 'Poulpe tiède, pommes de terre, oignon rouge, citron et huile d’olive.',
-        priceMillimes: 14000,
+        slug: 'salade-mechouia',
+        name: 'Salade mechouia au thon',
+        description:
+          'Poivrons et tomates grillés puis écrasés à la main, huile d’olive, thon émietté, olives et piment entier posé dessus.',
+        priceMillimes: 6000,
+        unit: 'PORTION',
+        imageUrl: '/photos/salade-mechouia.jpg',
+        isCatchOfDay: true,
+      },
+      {
+        slug: 'salade-tunisienne',
+        name: 'Salade tunisienne au thon',
+        description:
+          'Tomate, concombre, oignon et poivron taillés fin, thon, olive et câpres, assaisonnés au citron et à l’huile d’olive.',
+        priceMillimes: 5000,
         unit: 'PORTION',
       },
     ],
   },
   {
-    slug: 'poissons-grilles',
-    name: 'Poissons grillés',
+    slug: 'tajines-bouchees',
+    name: 'Tajines & bouchées',
     description:
-      D +
-      'Poissons entiers vendus au kilo, pesés devant vous puis grillés à la minute. Servis avec citron et salade.',
+      'Le tajine tunisien, cuit au four et coupé en parts, et les bouchées que l’on prépare pour les tables nombreuses et les commandes de traiteur.',
     produits: [
       {
-        slug: 'loup-de-mer',
-        name: 'Loup de mer',
-        description: D + 'Loup sauvage pêché à la ligne, grillé entier, chair ferme et fine.',
-        priceMillimes: 60000,
-        unit: 'KG',
-        isCatchOfDay: true,
-      },
-      {
-        slug: 'daurade-royale',
-        name: 'Daurade royale',
-        description: D + 'Daurade d’élevage, grillée entière, servie avec citron et huile d’olive.',
-        priceMillimes: 45000,
-        unit: 'KG',
-        isCatchOfDay: true,
-      },
-      {
-        slug: 'rouget-de-roche',
-        name: 'Rouget de roche',
-        description: D + 'Petits rougets frits ou grillés, à manger avec les doigts.',
-        priceMillimes: 40000,
-        unit: 'KG',
-        isCatchOfDay: true,
-        stock: 3,
-      },
-      {
-        slug: 'sardines-grillees',
-        name: 'Sardines grillées',
-        description: D + 'Sardines fraîches du jour, grillées au charbon, harissa et citron.',
-        priceMillimes: 15000,
-        unit: 'KG',
-      },
-      {
-        slug: 'mérou',
-        name: 'Mérou',
-        description: D + 'Mérou en tranches épaisses, grillé lentement, arrosé de tchermila.',
-        priceMillimes: 80000,
-        unit: 'KG',
-        isCatchOfDay: true,
-        isAvailable: false,
-      },
-    ],
-  },
-  {
-    slug: 'fruits-de-mer',
-    name: 'Fruits de mer',
-    description:
-      D + 'Crevettes, calamars, poulpe et coquillages, selon ce que ramènent les barques.',
-    produits: [
-      {
-        slug: 'crevettes-royales',
-        name: 'Crevettes royales',
-        description: D + 'Grosses crevettes grillées à la plancha, ail et persil, quantité limitée.',
-        priceMillimes: 70000,
-        unit: 'KG',
-        isCatchOfDay: true,
-        stock: 8,
-      },
-      {
-        slug: 'calamars-frits',
-        name: 'Calamars frits',
-        description: D + 'Anneaux de calamar panés minute, servis avec une sauce citronnée.',
-        priceMillimes: 20000,
+        slug: 'tajine-tunisien',
+        name: 'Tajine tunisien',
+        description:
+          'Œufs, fromage et persil pris au four, coupé en parts épaisses. Se mange tiède ou froid, seul ou avec une salade.',
+        priceMillimes: 5000,
         unit: 'PORTION',
+        imageUrl: '/photos/tajine-tunisien.jpg',
       },
       {
-        slug: 'poulpe-grille',
-        name: 'Poulpe grillé',
-        description: D + 'Poulpe attendri puis saisi au grill, huile d’olive et origan.',
-        priceMillimes: 25000,
+        slug: 'tajine-el-bey',
+        name: 'Tajine El Bey',
+        description:
+          'La version des grands jours : trois couches montées puis cuites ensemble, recouvertes de pistache concassée. Se commande à l’avance.',
+        priceMillimes: 9000,
         unit: 'PORTION',
+        imageUrl: '/photos/tajine-el-bey.jpg',
         isCatchOfDay: true,
       },
       {
-        slug: 'moules-marinieres',
-        name: 'Moules à la tunisienne',
-        description: D + 'Moules mijotées à la tomate, ail et piment doux, pain de semoule.',
-        priceMillimes: 18000,
+        slug: 'toasts-gratines',
+        name: 'Toasts gratinés',
+        description:
+          'Tranches de pain garnies de tomate, persil et fromage, passées au four jusqu’à ce que le dessus dore. Vendues à la douzaine.',
+        priceMillimes: 12000,
         unit: 'PORTION',
+        imageUrl: '/photos/toasts-gratines.jpg',
       },
     ],
   },
   {
     slug: 'plats',
     name: 'Plats',
-    description: D + 'Les plats de la maison, préparés à la commande.',
+    description:
+      'Chaque plat arrive complet : la pièce de viande ou de poisson, les pâtes à la sauce rouge, les frites coupées à la main, la mechouia et la salade tunisienne.',
     produits: [
       {
-        slug: 'couscous-au-poisson',
-        name: 'Couscous au poisson',
-        description: D + 'Semoule roulée à la main, bouillon de poisson, légumes de saison.',
+        slug: 'escalope-panee',
+        name: 'Escalope panée',
+        description:
+          'Escalope de dinde panée et frite à la commande, servie avec pâtes à la sauce rouge, frites, mechouia et salade au thon.',
+        priceMillimes: 15000,
+        unit: 'PORTION',
+        imageUrl: '/photos/escalope-panee.jpg',
+        isCatchOfDay: true,
+      },
+      {
+        slug: 'escalope-grillee',
+        name: 'Escalope grillée',
+        description:
+          'Escalope de dinde grillée nature, plus légère que la panée, avec pâtes, frites, mechouia, salade au thon et pain maison.',
+        priceMillimes: 15000,
+        unit: 'PORTION',
+        imageUrl: '/photos/escalope-grillee.jpg',
+      },
+      {
+        slug: 'escalope-merguez',
+        name: 'Escalope & merguez grillées',
+        description:
+          'Un mélange grillé au charbon : escalope tranchée et merguez maison, persil frais. Le plat des gros appétits.',
+        priceMillimes: 18000,
+        unit: 'PORTION',
+        imageUrl: '/photos/escalope-merguez.jpg',
+        isCatchOfDay: true,
+      },
+      {
+        slug: 'poulet-couscous',
+        name: 'Poulet rôti & couscous',
+        description:
+          'Cuisse de poulet rôtie jusqu’à ce que la peau croustille, couscous aux pois chiches, piment grillé, mechouia et salade au thon.',
+        priceMillimes: 14000,
+        unit: 'PORTION',
+        imageUrl: '/photos/poulet-couscous.jpg',
+        isCatchOfDay: true,
+      },
+      {
+        slug: 'kamounia',
+        name: 'Kamounia',
+        description:
+          'Le plat mijoté de la maison : viande fondante en sauce rouge au cumin et à l’ail, persil et oignon frais au moment de servir.',
+        priceMillimes: 13000,
+        unit: 'PORTION',
+        imageUrl: '/photos/kamounia.jpg',
+        isCatchOfDay: true,
+        stock: 8,
+      },
+      {
+        slug: 'kamounia-viande',
+        name: 'Kamounia à la viande',
+        description:
+          'Même sauce au cumin, morceaux de viande plus généreux, mijotés longuement. Servie avec du pain pour saucer.',
+        priceMillimes: 16000,
+        unit: 'PORTION',
+        imageUrl: '/photos/kamounia-viande.jpg',
+      },
+    ],
+  },
+  {
+    slug: 'pates-et-riz',
+    name: 'Pâtes & riz',
+    description:
+      'Les pâtes sont cuites à la commande dans leur sauce, jamais réchauffées. Le riz djerbien se prépare en quantité limitée chaque jour.',
+    produits: [
+      {
+        slug: 'pates-au-poulet',
+        name: 'Pâtes au poulet',
+        description:
+          'Penne mijotées dans une sauce tomate relevée avec les morceaux de poulet, piments verts entiers et persil.',
+        priceMillimes: 13000,
+        unit: 'PORTION',
+        imageUrl: '/photos/pates-au-poulet.jpg',
+      },
+      {
+        slug: 'spaghetti-crevettes',
+        name: 'Spaghetti aux crevettes',
+        description:
+          'Spaghetti liés à une sauce tomate courte, crevettes décortiquées saisies à part, piment doux grillé posé dessus.',
+        priceMillimes: 18000,
+        unit: 'PORTION',
+        imageUrl: '/photos/spaghetti-crevettes.jpg',
+        isCatchOfDay: true,
+      },
+      {
+        slug: 'spaghetti-viande',
+        name: 'Spaghetti à la viande',
+        description:
+          'Spaghetti à la sauce rouge, morceau de viande mijoté posé au centre, piment grillé et citron.',
+        priceMillimes: 16000,
+        unit: 'PORTION',
+        imageUrl: '/photos/spaghetti-viande.jpg',
+      },
+      {
+        slug: 'riz-djerbien',
+        name: 'Riz djerbien',
+        description:
+          'Riz cuit à la vapeur avec les herbes, les épinards et les pois chiches, morceaux de viande et de foie mêlés au grain.',
+        priceMillimes: 12000,
+        unit: 'PORTION',
+        imageUrl: '/photos/riz-djerbien.jpg',
+        stock: 3,
+        isCatchOfDay: true,
+      },
+    ],
+  },
+  {
+    slug: 'poissons-fruits-de-mer',
+    name: 'Poissons & fruits de mer',
+    description:
+      'Le poisson dépend de ce qui rentre le matin. Quand une ligne disparaît de l’ardoise, c’est qu’il n’y en a plus jusqu’au lendemain.',
+    produits: [
+      {
+        slug: 'dorade-grillee',
+        name: 'Dorade grillée',
+        description:
+          'Dorade entière grillée sur la braise, peau croustillante, servie avec pâtes à la sauce rouge, frites, mechouia et salade.',
         priceMillimes: 25000,
         unit: 'PORTION',
+        imageUrl: '/photos/dorade-grillee.jpg',
+        isCatchOfDay: true,
       },
       {
-        slug: 'riz-aux-fruits-de-mer',
-        name: 'Riz aux fruits de mer',
-        description: D + 'Riz parfumé, crevettes, calamars et moules, cuit dans son jus.',
-        priceMillimes: 28000,
-        unit: 'PORTION',
+        slug: 'loup-de-mer',
+        name: 'Loup de mer',
+        description:
+          'Loup entier grillé au charbon, arrosé d’huile d’olive et de citron. Vendu au poids, pesé avant cuisson.',
+        priceMillimes: 60000,
+        unit: 'KG',
+        isCatchOfDay: true,
       },
       {
-        slug: 'ojja-aux-crevettes',
-        name: 'Ojja aux crevettes',
-        description: D + 'Œufs brouillés à la tomate et au piment, crevettes décortiquées.',
+        slug: 'sardines-grillees',
+        name: 'Sardines grillées',
+        description:
+          'Sardines du jour grillées entières au charbon, servies avec harissa, citron et pain. Le plat le plus simple de la carte.',
+        priceMillimes: 15000,
+        unit: 'KG',
+      },
+      {
+        slug: 'crevettes-royales',
+        name: 'Crevettes royales',
+        description:
+          'Grosses crevettes saisies à la plancha avec ail et persil. Quantité limitée, selon l’arrivage du matin.',
+        priceMillimes: 70000,
+        unit: 'KG',
+        stock: 4,
+        isCatchOfDay: true,
+      },
+      {
+        slug: 'calamars-frits',
+        name: 'Calamars frits',
+        description:
+          'Anneaux de calamar farinés et frits minute, servis très chauds avec une sauce citronnée et des frites.',
         priceMillimes: 20000,
         unit: 'PORTION',
       },
-    ],
-  },
-  {
-    slug: 'accompagnements',
-    name: 'Accompagnements',
-    description: D + 'À ajouter à un poisson grillé ou à partager au milieu de la table.',
-    produits: [
       {
-        slug: 'frites-maison',
-        name: 'Frites maison',
-        description: D + 'Pommes de terre fraîches coupées et frites à la commande.',
-        priceMillimes: 5000,
+        slug: 'poulpe-grille',
+        name: 'Poulpe grillé',
+        description:
+          'Poulpe attendri puis saisi sur le grill, huile d’olive, origan et citron. Se commande de préférence à l’avance.',
+        priceMillimes: 25000,
         unit: 'PORTION',
-      },
-      {
-        slug: 'salade-tunisienne',
-        name: 'Salade tunisienne',
-        description: D + 'Tomate, concombre, oignon et poivron taillés fin, citron.',
-        priceMillimes: 6000,
-        unit: 'PORTION',
-      },
-      {
-        slug: 'riz-blanc',
-        name: 'Riz blanc',
-        description: D + 'Riz nature, beurre et citron.',
-        priceMillimes: 4000,
-        unit: 'PORTION',
-      },
-    ],
-  },
-  {
-    slug: 'desserts',
-    name: 'Desserts',
-    description: D + 'Pour finir, quelque chose de simple.',
-    produits: [
-      {
-        slug: 'assiette-de-fruits',
-        name: 'Assiette de fruits de saison',
-        description: D + 'Fruits frais coupés selon la saison.',
-        priceMillimes: 6000,
-        unit: 'PORTION',
-      },
-      {
-        slug: 'bambalouni',
-        name: 'Bambalouni',
-        description: D + 'Beignet tunisien saupoudré de sucre, servi tiède.',
-        priceMillimes: 3000,
-        unit: 'PIECE',
+        isAvailable: false,
+        isCatchOfDay: true,
       },
     ],
   },
   {
     slug: 'boissons',
     name: 'Boissons',
-    description: D + 'Boissons fraîches et thé à la menthe.',
+    description: 'Boissons fraîches et thé à la menthe préparé à la commande.',
     produits: [
       {
         slug: 'eau-minerale-50cl',
         name: 'Eau minérale 50 cl',
-        description: D + 'Bouteille d’eau minérale.',
-        priceMillimes: 2000,
+        description: 'Bouteille d’eau minérale fraîche.',
+        priceMillimes: 1000,
         unit: 'PIECE',
       },
       {
         slug: 'boisson-gazeuse',
         name: 'Boisson gazeuse 33 cl',
-        description: D + 'Canette au choix.',
-        priceMillimes: 3000,
+        description: 'Canette au choix, servie fraîche.',
+        priceMillimes: 2000,
         unit: 'PIECE',
       },
       {
         slug: 'the-a-la-menthe',
         name: 'Thé à la menthe',
-        description: D + 'Thé vert, menthe fraîche, pignons de pin.',
-        priceMillimes: 3000,
+        description: 'Thé vert infusé avec de la menthe fraîche et des pignons de pin.',
+        priceMillimes: 2000,
         unit: 'PIECE',
       },
     ],
@@ -277,14 +337,14 @@ async function main() {
   console.log(`✓ Compte administrateur : ${email}`);
 
   // 2. Réglages de démonstration --------------------------------------------
-  // Fictifs eux aussi : frais, minimum et zones sont à confirmer avec le client
+  // Fictifs : frais, minimum et zones sont à confirmer avec le client
   // (DONNEES-A-OBTENIR.md §5). `npm run db:reset` les remet tous à zéro.
   const REGLAGES_DEMO = {
     isOpenForOrders: true,
     deliveryFeeMillimes: 3000,
     minOrderMillimes: 20000,
     deliveryZones: 'Sousse centre, Khezama, Sahloul, Hammam Sousse, Port El Kantaoui',
-    announcement: 'Arrivage du matin : crevettes royales et daurades.',
+    announcement: 'Aujourd’hui : dorade grillée et riz djerbien.',
   };
 
   await prisma.setting.upsert({
@@ -294,9 +354,11 @@ async function main() {
   });
   console.log('✓ Réglages de démonstration');
 
-  // 3. Carte de démonstration ----------------------------------------------
+  // 3. Carte ----------------------------------------------------------------
   let nbProduits = 0;
-  for (const [indexCategorie, categorie] of CARTE_DEMO.entries()) {
+  let nbPhotos = 0;
+
+  for (const [indexCategorie, categorie] of CARTE.entries()) {
     const enregistree = await prisma.category.upsert({
       where: { slug: categorie.slug },
       update: {
@@ -313,40 +375,37 @@ async function main() {
     });
 
     for (const [indexProduit, produit] of categorie.produits.entries()) {
+      const donnees = {
+        name: produit.name,
+        description: produit.description,
+        priceMillimes: produit.priceMillimes,
+        unit: produit.unit,
+        imageUrl: produit.imageUrl ?? null,
+        stock: produit.stock ?? null,
+        isAvailable: produit.isAvailable ?? true,
+        isCatchOfDay: produit.isCatchOfDay ?? false,
+        position: indexProduit,
+        categoryId: enregistree.id,
+      };
+
       await prisma.product.upsert({
         where: { slug: produit.slug },
-        update: {
-          name: produit.name,
-          description: produit.description,
-          priceMillimes: produit.priceMillimes,
-          unit: produit.unit,
-          stock: produit.stock ?? null,
-          isAvailable: produit.isAvailable ?? true,
-          isCatchOfDay: produit.isCatchOfDay ?? false,
-          position: indexProduit,
-          categoryId: enregistree.id,
-        },
-        create: {
-          slug: produit.slug,
-          name: produit.name,
-          description: produit.description,
-          priceMillimes: produit.priceMillimes,
-          unit: produit.unit,
-          stock: produit.stock ?? null,
-          isAvailable: produit.isAvailable ?? true,
-          isCatchOfDay: produit.isCatchOfDay ?? false,
-          position: indexProduit,
-          categoryId: enregistree.id,
-        },
+        // Le champ imageUrl n'est pas écrasé s'il a déjà été renseigné depuis
+        // le back-office ou par le script des photos empruntées.
+        update: produit.imageUrl ? donnees : { ...donnees, imageUrl: undefined },
+        create: { slug: produit.slug, ...donnees },
       });
+
       nbProduits += 1;
+      if (produit.imageUrl) nbPhotos += 1;
     }
   }
 
-  console.log(`✓ Carte de démonstration : ${CARTE_DEMO.length} catégories, ${nbProduits} produits`);
+  console.log(`✓ Carte : ${CARTE.length} catégories, ${nbProduits} plats`);
+  console.log(`✓ ${nbPhotos} photos du restaurant rattachées`);
   console.log('');
-  console.log('  Ces données sont FICTIVES et marquées [DÉMO].');
-  console.log('  Quand le client fournira sa vraie carte : npm run db:reset');
+  console.log('  ⚠ Les PRIX sont encore fictifs — voir DONNEES-A-OBTENIR.md §4.');
+  console.log('  Les poissons sans photo maison : npm run photos:demo');
 }
 
 main()

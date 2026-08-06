@@ -43,30 +43,17 @@ function chargerEnv() {
  * `fichier` est figé après prospection pour que le script soit reproductible :
  * on ne dépend pas de l'ordre de pertinence du moteur de recherche.
  */
+/**
+ * Le restaurant a fourni ses propres photos : elles sont installées par le seed
+ * et ne passent pas par ce script. Il ne reste ici que les poissons et fruits
+ * de mer pour lesquels aucune photo maison n'existe encore.
+ */
 export const PHOTOS = [
-  { slug: 'salade-mechouia-thon', recherche: 'mechouia salad tunisian', fichier: 'Salade Mechouia au thon.jpg' },
-  { slug: 'brik-aux-crevettes', recherche: 'brik tunisian food', fichier: 'Brik fait à la main.jpg' },
-  { slug: 'salade-de-poulpe', recherche: 'octopus salad', fichier: 'Ahtapot Salatası Octopus salad.JPG' },
   { slug: 'loup-de-mer', recherche: 'grilled sea bass fish', fichier: 'Levrek Izgara Beykoz Koru Sosyal Tesisleri.JPG' },
-  { slug: 'daurade-royale', recherche: 'sea bream grilled', fichier: 'Ципура на скара на жар.jpg' },
-  { slug: 'rouget-de-roche', recherche: 'red mullet', fichier: 'Barbun Tava.jpg' },
   { slug: 'sardines-grillees', recherche: 'grilled sardines', fichier: 'Grilled sardines.jpg' },
-  { slug: 'mérou', recherche: 'grouper fish dish', fichier: 'Steam Grouper dish at Ristorante.jpg' },
   { slug: 'crevettes-royales', recherche: 'grilled prawns plate', fichier: 'Grilled prawn with herb.jpg' },
   { slug: 'calamars-frits', recherche: 'fried calamari rings', fichier: 'Deep-fried Calamari Rings.jpg' },
   { slug: 'poulpe-grille', recherche: 'grilled octopus', fichier: 'Grilled octopus with potatoes and chorizo - Cambridge, MA.jpg' },
-  { slug: 'moules-marinieres', recherche: 'moules marinieres', fichier: 'Moules marinières à La Rose Blanche (Bruxelles).jpg' },
-  { slug: 'couscous-au-poisson', recherche: 'fish couscous', fichier: 'Tunisian couscous with fish.JPG' },
-  { slug: 'riz-aux-fruits-de-mer', recherche: 'seafood rice paella', fichier: 'Seafoods paella.jpg' },
-  { slug: 'ojja-aux-crevettes', recherche: 'ojja tunisian eggs', fichier: 'Tunisian Ojja.jpg' },
-  { slug: 'frites-maison', recherche: 'french fries plate', fichier: 'French fries 3.jpg' },
-  { slug: 'salade-tunisienne', recherche: 'Tunisian salad', fichier: 'Tunisian salad.jpg' },
-  { slug: 'riz-blanc', recherche: 'white rice', fichier: 'White rice on a brown table.jpg' },
-  { slug: 'assiette-de-fruits', recherche: 'fruit platter sliced', fichier: 'Vanuatu Tropical Fruit Platter.jpg' },
-  { slug: 'bambalouni', recherche: 'bambalouni', fichier: 'Bambalouni 03.JPG' },
-  { slug: 'the-a-la-menthe', recherche: 'mint tea', fichier: 'Moroccan mint tea on a traditional tray.jpg' },
-  // Les bouteilles d'eau et les canettes de soda ne montrent que des marques :
-  // le motif SVG est préférable. Elles restent volontairement sans photo.
 ];
 
 /** Licences acceptées : réutilisation commerciale autorisée. */
@@ -206,14 +193,36 @@ async function purger() {
   chargerEnv();
   const prisma = new PrismaClient();
 
-  const { count } = await prisma.product.updateMany({
-    where: { imageUrl: { startsWith: '/photos/' } },
-    data: { imageUrl: null },
-  });
-  if (fs.existsSync(DOSSIER)) fs.rmSync(DOSSIER, { recursive: true, force: true });
+  // ATTENTION : /public/photos contient aussi les photos du restaurant.
+  // On ne retire QUE les fichiers empruntés, listés dans credits.json.
+  const fichierCredits = path.join(DOSSIER, 'credits.json');
+  if (!fs.existsSync(fichierCredits)) {
+    console.log('· Aucune photo empruntée à retirer (credits.json absent).');
+    await prisma.$disconnect();
+    return;
+  }
+
+  const { photos = [] } = JSON.parse(fs.readFileSync(fichierCredits, 'utf8'));
+  let supprimes = 0;
+
+  for (const credit of photos) {
+    await prisma.product.updateMany({
+      where: { imageUrl: credit.fichier },
+      data: { imageUrl: null },
+    });
+    const chemin = path.join(DOSSIER, path.basename(credit.fichier));
+    if (fs.existsSync(chemin)) {
+      fs.rmSync(chemin);
+      supprimes += 1;
+    }
+  }
+
+  fs.rmSync(fichierCredits, { force: true });
 
   await prisma.$disconnect();
-  console.log(`✓ ${count} produit(s) remis au motif SVG · dossier public/photos supprimé`);
+  console.log(
+    `✓ ${supprimes} photo(s) empruntée(s) supprimée(s) · les photos du restaurant sont intactes`,
+  );
 }
 
 const mode = process.argv[2];

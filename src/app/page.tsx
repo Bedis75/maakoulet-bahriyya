@@ -39,11 +39,11 @@ export default async function PageAccueil() {
       {/* ------------------------------------------------------------ Héro */}
       <section className="conteneur grid gap-10 pb-16 pt-12 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-16 lg:pt-16">
         <div>
-          <p className="surtitre">Poissons &amp; fruits de mer{v ? ` · ${v}` : ''}</p>
+          <p className="surtitre">Cuisine tunisienne &amp; fruits de mer{v ? ` · ${v}` : ''}</p>
           <h1 className="mt-4">
-            Le poisson du jour,
+            La cuisine de tous les jours,
             <br />
-            grillé à la minute
+            faite à la commande
             {v && (
               <>
                 {' '}
@@ -53,8 +53,9 @@ export default async function PageAccueil() {
             .
           </h1>
           <p className="mt-6 max-w-lecture text-lg text-encre/75">
-            Ce qui arrive du port le matin est sur l’ardoise à midi. Vous choisissez, on pèse, on
-            grille. À emporter ou livré{v ? ` à ${v} et alentours` : ''}.
+            Escalopes et poulet rôti, kamounia mijotée, tajines, pâtes, et le poisson du jour quand
+            il rentre. Chaque plat part complet, avec ses pâtes, ses frites et ses salades. À
+            emporter ou livré{v ? ` à ${v} et alentours` : ''}.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

@@ -28,8 +28,8 @@ export default function SiteFooter() {
         <div>
           <Wordmark taille="pied" sousTitre clair />
           <p className="mt-4 max-w-xs text-sm text-sel/75">
-            Poissons et fruits de mer{v ? ` à ${v}` : ''} : arrivage du jour, grillades à la minute,
-            livraison et vente à emporter.
+            Cuisine tunisienne et fruits de mer{v ? ` à ${v}` : ''} : plats du jour, grillades,
+            tajines et poisson frais. Livraison et vente à emporter.
           </p>
         </div>
 

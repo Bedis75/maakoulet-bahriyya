@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: v
-      ? `Restaurant fruits de mer à ${v} — ${site.nameFr}`
-      : `${site.nameFr} — poissons & fruits de mer`,
+      ? `Restaurant tunisien & poisson à ${v} — ${site.nameFr}`
+      : `${site.nameFr} — cuisine tunisienne & fruits de mer`,
     template: `%s · ${site.nameFr}`,
   },
   description: descriptionSite(),

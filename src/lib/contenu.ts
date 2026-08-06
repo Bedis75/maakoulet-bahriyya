@@ -29,24 +29,24 @@ const RESTAURANT_DEMO: SectionEditoriale[] = [
     titre: 'La maison',
     provisoire: false,
     paragraphes: [
-      'La maison a ouvert face au port, là où les barques rentrent au petit matin. Depuis, la règle n’a pas bougé : on ne sert que ce qui est arrivé le jour même, et quand il n’y en a plus, on l’écrit sur l’ardoise.',
-      'La salle est simple, les tables serrées, le service rapide. Ce qui compte est dans l’assiette et sur la balance.',
+      'L’enseigne dit « fruits de mer », et c’est vrai : le poisson est là dès qu’il rentre. Mais on vient surtout ici pour la cuisine de tous les jours — l’escalope, le poulet rôti, la kamounia qui mijote depuis le matin.',
+      'La salle est simple, le service rapide. Ce qui compte est dans l’assiette.',
     ],
   },
   {
-    titre: 'D’où vient le poisson',
+    titre: 'Le plat complet',
     provisoire: false,
     paragraphes: [
-      'Le poisson vient du port, acheté chaque matin aux pêcheurs qui débarquent leur nuit. Loup, daurade, rouget, sardine, poulpe : ce qui est monté sur l’étal dépend de la mer et du vent, pas d’un catalogue.',
-      'C’est pour cette raison que la carte change et que certaines lignes de l’ardoise sont barrées avant midi. Un poisson qui reste deux jours n’est plus le même poisson.',
+      'Ici, un plat n’est pas une pièce de viande seule sur une assiette. Il arrive avec ses pâtes à la sauce rouge, ses frites coupées le matin, sa mechouia au thon et sa salade tunisienne.',
+      'C’est la même chose en salle, à emporter ou en livraison : la barquette est compartimentée pour que rien ne se mélange en route.',
     ],
   },
   {
     titre: 'La cuisine',
     provisoire: false,
     paragraphes: [
-      'Vous choisissez votre poisson entier, il est pesé devant vous, puis grillé à la minute au charbon. Rien n’attend sous une lampe.',
-      'Le reste suit la même logique : tchermila préparée le matin, salade taillée à la commande, citron et huile d’olive, harissa à part pour ceux qui la veulent.',
+      'Tout se cuit à la commande : l’escalope saisie, le poulet doré au four, le poisson posé sur la braise. Les pâtes finissent leur cuisson dans la sauce, jamais réchauffées.',
+      'Les entrées, elles, se préparent le matin : poivrons grillés au feu et écrasés à la main pour la mechouia, tajines cuits au four et coupés en parts.',
     ],
   },
   {
@@ -125,14 +125,14 @@ export const contenu = {
   /** Les trois arguments de l'accueil — ils, en revanche, sont sûrs. */
   arguments: [
     {
-      titre: 'Arrivage quotidien',
+      titre: 'Le plat complet',
       texte:
-        'La carte suit la mer. Ce qui est pêché le matin est sur l’ardoise à midi, et quand c’est fini, c’est fini.',
+        'Chaque plat part avec ses pâtes à la sauce rouge, ses frites coupées à la main, sa mechouia et sa salade. Rien à ajouter.',
     },
     {
-      titre: 'Grillé à la minute',
+      titre: 'Cuit à la commande',
       texte:
-        'Poisson pesé devant vous, grillé à la commande, servi avec citron et huile d’olive. Rien qui attende sous une lampe.',
+        'Escalope saisie, poulet rôti, poisson sur la braise. Rien qui attende sous une lampe, même en pleine heure de pointe.',
     },
     {
       titre: 'Livraison et à emporter',

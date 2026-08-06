@@ -131,32 +131,28 @@ npm run db:reset     # base propre : compte admin + réglages, rien d'autre
 puis saisie dans `/admin/carte` (création d’une catégorie, puis des plats à la suite sans
 quitter la page).
 
-### 2.4 Photos provisoires
+### 2.4 Photos
 
-Sans photo, un plat affiche un motif SVG dérivé de la palette (composant `DishImage`) — c’est
-le comportement par défaut, et celui qu’il faut viser tant que le client n’a rien fourni.
+Sans photo, un plat affiche un motif SVG dérivé de la palette (composant `DishImage`).
 
-Pour une présentation au client, `npm run photos:demo` installe des photos **empruntées** :
+**16 photos sont celles du restaurant**, installées par le seed et rattachées à leur plat.
+**5 photos restent empruntées** (Wikimedia Commons) pour les poissons non encore
+photographiés : loup de mer, sardines, crevettes royales, calamars, poulpe.
 
 ```bash
-npm run photos:demo     # télécharge 21 photos Wikimedia Commons dans /public/photos
-npm run photos:purge    # les retire et rend leur motif SVG aux plats
+npm run photos:demo     # (re)télécharge les 5 photos empruntées
+npm run photos:purge    # les retire — NE TOUCHE PAS aux photos du restaurant
 ```
 
-Trois choses à savoir :
+`photos:purge` ne supprime que les fichiers listés dans `public/photos/credits.json`.
 
-1. **Ces photos ne montrent pas les plats du restaurant.** Un client qui commande d’après une
-   photo qui ne correspond pas à ce qu’il reçoit a un motif de réclamation légitime.
-2. Elles sont toutes sous licence autorisant la réutilisation commerciale (CC0, CC BY,
-   CC BY-SA, domaine public). CC BY et CC BY-SA **exigent l’attribution** : la page
-   `/credits-photos` la publie, et un lien apparaît dans le pied de page tant que ces photos
-   sont en place. Ne pas supprimer cette page sans supprimer les photos.
-3. **À remplacer avant la mise en ligne définitive.** De vraies photos des plats sont le poste
-   qui fera le plus de différence sur ce site — voir l’annexe, questions 19 à 22.
+Les photos empruntées sont sous licence autorisant la réutilisation commerciale (CC0, CC BY,
+CC BY-SA). CC BY et CC BY-SA **exigent l’attribution** : la page `/credits-photos` la publie,
+et le lien du pied de page n’apparaît que tant que ces photos sont en place. Ne pas supprimer
+cette page sans supprimer les photos.
 
-Pour poser les vraies photos : déposer les fichiers dans `/public/photos`, puis renseigner le
-champ « Adresse de la photo » de chaque plat dans `/admin/carte` (par exemple
-`/photos/loup-de-mer.jpg`).
+Pour ajouter une vraie photo : déposer le fichier dans `/public/photos`, puis renseigner le
+champ « Adresse de la photo » du plat dans `/admin/carte` (par exemple `/photos/loup.jpg`).
 
 ---
 

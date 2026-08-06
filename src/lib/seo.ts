@@ -58,7 +58,7 @@ export function jsonLdRestaurant(): Record<string, unknown> {
     alternateName: site.nameFr,
     description: descriptionSite(),
     url: urlAbsolue('/'),
-    servesCuisine: ['Fruits de mer', 'Cuisine tunisienne'],
+    servesCuisine: ['Cuisine tunisienne', 'Fruits de mer', 'Grillades'],
     priceRange: site.priceRange,
     currenciesAccepted: 'TND',
     paymentAccepted: 'Espèces à la livraison',

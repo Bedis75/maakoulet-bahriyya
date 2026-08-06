@@ -44,13 +44,13 @@ export default async function Ardoise() {
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-chaux/20 pb-4">
         <h2 id="titre-ardoise" className="text-[1.6rem] text-chaux sm:text-[2rem]">
-          L’arrivage du jour
+          L’ardoise du jour
         </h2>
         <p className="prix text-xs uppercase tracking-[0.12em] text-sel/55">{dateDuJour()}</p>
       </div>
 
       {produits.length === 0 ? (
-        <p className="py-10 text-center text-sel/70">L’arrivage du jour sera publié ce matin.</p>
+        <p className="py-10 text-center text-sel/70">L’ardoise du jour sera publiée ce matin.</p>
       ) : (
         <ul className="divide-y divide-chaux/10">
           {produits.map((produit) => {

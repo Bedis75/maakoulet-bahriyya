@@ -62,12 +62,20 @@ d'autre n'écrit.
 
 ## 4. Carte, prix, stock — base de données
 
-☐ Récupérer la carte complète : catégories, plats, descriptions, **prix réels**
-☐ Pour chaque poisson : vendu **au kilo** ou **à la pièce** ?
-☐ Quels plats changent selon l'arrivage du jour ?
-☐ `npm run db:reset` puis saisie dans `/admin/carte`
+**Les plats sont désormais les vrais** : 25 plats en 6 catégories, reconstruits d'après les
+17 photos fournies par le restaurant (escalopes, poulet rôti, kamounia, tajines, pâtes, riz
+djerbien, poisson). Restent à obtenir :
 
-Les 23 plats actuels sont de la démonstration (descriptions préfixées `[DÉMO]`, prix ronds).
+☐ **LES PRIX — tous fictifs.** Valeurs rondes provisoires, à remplacer une par une dans
+`/admin/carte`
+☐ Les descriptions ont été écrites d'après les photos : **à faire valider**, elles peuvent
+contenir des erreurs (composition, accompagnements)
+☐ Mode de vente à confirmer : loup, sardines et crevettes sont au **kilo**, le reste à la
+**portion** — est-ce juste ?
+☐ Plats manquants ? La carte ne contient que ce que montrent les photos
+☐ Quels plats changent selon l'arrivage / le jour de la semaine ?
+☐ Le « Tajine El Bey » se commande-t-il vraiment à l'avance ? Les toasts sont-ils bien
+vendus à la douzaine ?
 
 ## 5. Réglages de commande — `/admin/reglages`
 
@@ -84,15 +92,26 @@ Les 23 plats actuels sont de la démonstration (descriptions préfixées `[DÉMO
 
 ## 6. Photos — `public/photos`
 
-Les 21 photos actuelles viennent de Wikimedia Commons et **ne montrent pas les plats du
-restaurant** (voir `/credits-photos`).
+**16 photos sont celles du restaurant** et montrent ses vrais plats. ✔
 
-☐ Photos des plats — lumière du jour, les meilleures possibles
+**5 photos restent empruntées** (Wikimedia Commons, licences libres) pour les poissons dont
+le restaurant n'a pas encore de photo : loup de mer, sardines grillées, crevettes royales,
+calamars frits, poulpe grillé. Elles sont créditées sur `/credits-photos`, et le lien du pied
+de page disparaîtra tout seul quand elles seront remplacées.
+
+☐ Photographier ces 5 poissons — c'est tout ce qui manque côté plats
 ☐ Photos de la salle et de la façade
 ☐ Photo de l'équipe / du chef
-☐ Sinon : prévoir une séance photo. C'est le poste le plus rentable du projet.
-☐ Une fois les vraies photos en place : `npm run photos:purge`, puis les déposer dans
-`public/photos` et renseigner le champ « Adresse de la photo » dans `/admin/carte`
+☐ Une fois faites : déposer les fichiers dans `public/photos`, renseigner le champ
+« Adresse de la photo » dans `/admin/carte`, puis `npm run photos:purge` pour retirer les
+photos empruntées et leurs crédits
+
+> `npm run photos:purge` ne touche **que** les fichiers listés dans `credits.json`.
+> Les photos du restaurant ne risquent rien.
+
+**Deux photos fournies ne sont pas utilisées** et restent disponibles :
+`plat-escalope-salle.jpg` (le plat servi en salle, très bonne photo d'ambiance) et une
+seconde vue de la kamounia. À placer si besoin sur `/le-restaurant`.
 
 ## 7. Compte administrateur
 
@@ -138,8 +157,9 @@ pêcheurs, fréquence des arrivages) · avis clients à reprendre.
 ## Avant la mise en ligne — contrôle final
 
 ☐ `DONNEES_DEMONSTRATION = false` dans `src/lib/site.ts`
-☐ Plus aucun `[DÉMO]` dans la base : `npm run db:reset` effectué et vraie carte saisie
-☐ `npm run photos:purge` puis vraies photos installées
+☐ **Tous les prix remplacés par les vrais** dans `/admin/carte`
+☐ Descriptions des plats validées par le restaurant
+☐ Les 5 poissons photographiés, puis `npm run photos:purge`
 ☐ Aucune adresse, aucun numéro, aucun prix, aucun avis inventé visible par un visiteur
 ☐ Mot de passe administrateur et `AUTH_SECRET` changés
 ☐ `NEXT_PUBLIC_SITE_URL` sur le vrai domaine
