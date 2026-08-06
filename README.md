@@ -43,13 +43,20 @@ Ces identifiants viennent de `ADMIN_EMAIL` / `ADMIN_PASSWORD` dans `.env`.
 | Commande | Effet |
 |---|---|
 | `npm run dev` | serveur de développement |
-| `npm run build` | build de production (génère Prisma puis compile) |
+| `npm run build` | build de production |
 | `npm run start` | serveur de production |
 | `npm run setup` | installation complète en une commande |
 | `npm run db:push` | applique le schéma Prisma à la base |
 | `npm run db:seed` | (ré)insère le compte admin, les réglages et la **carte de démonstration** |
 | `npm run db:reset` | **efface toute la démo** et les commandes ; garde le compte admin et les réglages |
 | `npm run db:studio` | explorateur de base Prisma |
+
+> Le client Prisma est régénéré par le `postinstall`, pas par le build.
+> Sous Windows, `prisma generate` échoue (`EPERM`) dès qu'un `next dev` ou
+> `next start` tourne : il tient le fichier `query_engine-windows.dll.node`
+> ouvert. Le sortir du build permet de compiler pendant qu'un serveur tourne.
+> Après une modification de `prisma/schema.prisma`, lancer `npm run db:push`
+> (qui régénère aussi) ou `npx prisma generate`, serveurs arrêtés.
 | `npm run typecheck` | vérification TypeScript seule |
 | `npm run lint` | ESLint |
 
