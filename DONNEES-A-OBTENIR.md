@@ -7,6 +7,10 @@
 > le site complet lors d'une présentation. Elles doivent **toutes** être remplacées avant
 > la moindre mise en ligne publique.
 >
+> **Seule exception : la ville, l'Ariana, est confirmée.** Elle est donc renseignée dans les
+> deux jeux de valeurs et survivra au passage en mode réel. La rue, le code postal et les
+> coordonnées GPS, eux, restent inventés.
+>
 > Interrupteur : `DONNEES_DEMONSTRATION` dans [`src/lib/site.ts`](src/lib/site.ts).
 > Le passer à `false` fait réapparaître les marqueurs « À CONFIRMER » et masque proprement
 > tout ce qui n'est pas renseigné.
@@ -28,19 +32,19 @@
 | Champ | Valeur FICTIVE affichée | Valeur réelle | Fait |
 |---|---|---|---|
 | `legalName` | Maakoulet Bahriyya SARL | | ☐ |
-| `description` | « Restaurant de poissons et fruits de mer à Sousse… » | | ☐ |
-| `address.street` | Avenue Hédi Chaker, face au port de pêche | | ☐ |
-| `address.city` | **Sousse** — mot-clé SEO n°1, voir README §4 | | ☐ |
-| `address.postalCode` | 4000 | | ☐ |
-| `geo.lat` / `geo.lng` | 35.8256 / 10.6390 (port de Sousse) | | ☐ |
+| `description` | « Cuisine tunisienne et fruits de mer à Ariana… » | | ☐ |
+| `address.street` | Avenue Habib Bourguiba — **inventée** | | ☐ |
+| `address.city` | **Ariana** — ✔ CONFIRMÉ par le client. Mot-clé SEO n°1, voir README §4 | ✔ | ✔ |
+| `address.postalCode` | 2080 (Ariana ville) — à confirmer selon le quartier | | ☐ |
+| `geo.lat` / `geo.lng` | 36.8625 / 10.1956 (centre de l’Ariana, pas l’adresse réelle) | | ☐ |
 | `googleMapsUrl` | lien de recherche sur ces coordonnées | fiche d'établissement réelle | ☐ |
-| `phone` | +216 73 000 000 | | ☐ |
+| `phone` | +216 71 000 000 (indicatif du Grand Tunis) | | ☐ |
 | `whatsapp` | +216 20 000 000 | | ☐ |
 | `email` | contact@maakoulet-bahriyya.com — **domaine non enregistré, ne reçoit rien** | | ☐ |
 | `hours` | Mar–Dim, 11h30–15h00 et 18h30–23h00 | | ☐ |
 | `closedDays` | Lundi | | ☐ |
-| `social.facebook` | facebook.com/maakoulet.bahriyya.sousse — **compte inexistant** | | ☐ |
-| `social.instagram` | instagram.com/maakoulet.bahriyya.sousse — **compte inexistant** | | ☐ |
+| `social.facebook` | facebook.com/maakoulet.bahriyya.ariana — **compte inexistant** | | ☐ |
+| `social.instagram` | instagram.com/maakoulet.bahriyya.ariana — **compte inexistant** | | ☐ |
 | `logo` | `null` (logotype arabe typographique) | fichier vectoriel si le client en a un | ☐ |
 
 ## 2. Avis clients — `src/lib/contenu.ts`
@@ -52,13 +56,14 @@ Les trois avis affichés sur l'accueil sont **inventés**. Prénoms et textes fi
 
 ## 3. Textes de présentation — `src/lib/contenu.ts`
 
-Les quatre sections de `/le-restaurant` (la maison, provenance du poisson, la cuisine,
-l'équipe) sont **des textes de remplissage plausibles**, écrits sans rien savoir du
-restaurant.
+Les quatre sections de `/le-restaurant` (la maison, le plat complet, la cuisine, l'équipe)
+sont **des textes de remplissage plausibles**, écrits d'après les photos et sans rien savoir
+de l'histoire du restaurant.
 
-☐ Les réécrire avec le propriétaire. Le paragraphe sur la provenance du poisson est le plus
-utile du site : il rassure le client et apporte au référencement local des mots que personne
-d'autre n'écrit.
+☐ Les réécrire avec le propriétaire : depuis quand, par qui, ce qui fait la maison
+☐ D'où viennent les produits — l'Ariana n'est pas sur la côte : le poisson arrive du marché
+de gros ou de La Goulette. Le dire précisément rassure le client et apporte au référencement
+local des mots que personne d'autre n'écrit.
 
 ## 4. Carte, prix, stock — base de données
 
@@ -83,8 +88,8 @@ vendus à la douzaine ?
 |---|---|---|---|
 | Frais de livraison | 3,000 DT | | ☐ |
 | Minimum de commande | 20,000 DT | | ☐ |
-| Zones livrées | Sousse centre, Khezama, Sahloul, Hammam Sousse, Port El Kantaoui | | ☐ |
-| Bandeau d'annonce | « Arrivage du matin : crevettes royales et daurades. » | | ☐ |
+| Zones livrées | Ariana centre, Ennasr, Menzah, Borj Louzir, Riadh Landlous, La Soukra | | ☐ |
+| Bandeau d'annonce | « Aujourd'hui : dorade grillée et riz djerbien. » | | ☐ |
 
 ☐ Délai de livraison annoncé
 ☐ Heure limite de prise de commande
@@ -149,8 +154,9 @@ changent selon l'arrivage · plats à mettre en avant.
 
 **Photos** — plats, salle, façade, équipe.
 
-**Contenu** — histoire du restaurant (depuis quand, par qui) · d'où vient le poisson (port,
-pêcheurs, fréquence des arrivages) · avis clients à reprendre.
+**Contenu** — histoire du restaurant (depuis quand, par qui) · d'où viennent les produits, et
+le poisson en particulier (marché de gros, La Goulette, fréquence des arrivages) · avis
+clients à reprendre.
 
 ---
 

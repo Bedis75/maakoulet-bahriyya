@@ -37,24 +37,25 @@ type Identite = {
 };
 
 /**
- * VALEURS FICTIVES — aucune ne vient du restaurant.
+ * VALEURS FICTIVES — sauf la ville, qui est confirmée : ARIANA.
  * Le numéro de téléphone se termine par une partie abonné en 000 000, non
- * attribuable : il ne sonne chez personne. Les coordonnées GPS pointent sur le
- * port de Sousse, lieu public. Les comptes sociaux n'existent pas.
+ * attribuable : il ne sonne chez personne. L'indicatif 71 est celui du Grand
+ * Tunis, dont dépend l'Ariana. Les coordonnées GPS pointent sur le centre de
+ * l'Ariana, lieu public. Les comptes sociaux n'existent pas.
  */
 const DEMO: Identite = {
   legalName: 'Maakoulet Bahriyya SARL',
   description:
-    'Cuisine tunisienne et fruits de mer à Sousse : plats du jour, grillades, tajines et poisson frais. Livraison et vente à emporter.',
+    'Cuisine tunisienne et fruits de mer à Ariana : plats du jour, grillades, tajines et poisson frais. Livraison et vente à emporter.',
   address: {
-    street: 'Avenue Hédi Chaker, face au port de pêche',
-    city: 'Sousse',
-    postalCode: '4000',
+    street: 'Avenue Habib Bourguiba',
+    city: 'Ariana',
+    postalCode: '2080',
     country: 'TN',
   },
-  geo: { lat: 35.8256, lng: 10.639 },
-  googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=35.8256,10.6390',
-  phone: '+216 73 000 000',
+  geo: { lat: 36.8625, lng: 10.1956 },
+  googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=36.8625,10.1956',
+  phone: '+216 71 000 000',
   whatsapp: '+216 20 000 000',
   email: 'contact@maakoulet-bahriyya.com',
   hours: [
@@ -63,8 +64,8 @@ const DEMO: Identite = {
   ],
   closedDays: 'Lundi',
   social: {
-    facebook: 'https://www.facebook.com/maakoulet.bahriyya.sousse',
-    instagram: 'https://www.instagram.com/maakoulet.bahriyya.sousse',
+    facebook: 'https://www.facebook.com/maakoulet.bahriyya.ariana',
+    instagram: 'https://www.instagram.com/maakoulet.bahriyya.ariana',
   },
 };
 
@@ -80,9 +81,13 @@ const REEL: Identite = {
   address: {
     /** TODO numéro et rue. */
     street: A_CONFIRMER,
-    /** TODO ville — MOT-CLÉ SEO LE PLUS IMPORTANT DU SITE (voir README §4). */
-    city: A_CONFIRMER,
-    /** TODO code postal. */
+    /**
+     * CONFIRMÉ par le client : l'Ariana.
+     * C'est le mot-clé SEO le plus important du site (voir README §4) — il part
+     * dans le <title> de l'accueil, le H1, le JSON-LD et le pied de page.
+     */
+    city: 'Ariana',
+    /** TODO code postal — 2080 pour l'Ariana ville, à confirmer selon le quartier. */
     postalCode: A_CONFIRMER,
     country: 'TN',
   },
@@ -174,7 +179,7 @@ export function whatsappHref(): string | null {
 /** Ville affichable dans les titres, ou chaîne vide si non confirmée. */
 export const ville = () => (aVille() ? site.address.city : '');
 
-/** « Maakoulet Bahriyya — Sousse » ou « Maakoulet Bahriyya » si pas de ville. */
+/** « Maakoulet Bahriyya — Ariana » ou « Maakoulet Bahriyya » si pas de ville. */
 export const nomEtVille = () => (aVille() ? `${site.nameFr} — ${site.address.city}` : site.nameFr);
 
 /** Adresse sur une ligne, ou null. */

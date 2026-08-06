@@ -343,7 +343,7 @@ async function main() {
     isOpenForOrders: true,
     deliveryFeeMillimes: 3000,
     minOrderMillimes: 20000,
-    deliveryZones: 'Sousse centre, Khezama, Sahloul, Hammam Sousse, Port El Kantaoui',
+    deliveryZones: 'Ariana centre, Ennasr, Menzah, Borj Louzir, Riadh Landlous, La Soukra',
     announcement: 'Aujourd’hui : dorade grillée et riz djerbien.',
   };
 

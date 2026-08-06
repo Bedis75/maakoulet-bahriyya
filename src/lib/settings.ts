@@ -32,7 +32,7 @@ export async function getReglages(): Promise<Reglages> {
   return PAR_DEFAUT;
 }
 
-/** « Sousse, Kantaoui, Hammam Sousse » → ['Sousse', 'Kantaoui', 'Hammam Sousse'] */
+/** « Ariana centre, Ennasr, Menzah » → ['Ariana centre', 'Ennasr', 'Menzah'] */
 export function listeZones(zones: string): string[] {
   return zones
     .split(',')
